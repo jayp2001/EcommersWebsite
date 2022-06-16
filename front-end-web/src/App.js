@@ -1,14 +1,16 @@
 import React from 'react';
 import { BrowserRouter ,Route,Routes } from "react-router-dom";
 // import "bootstrap/dist/css/bootstrap.min.css";
-import Login from './pages/login';
+import LoginWrapper from './pages/login/loginWrapper';
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' exact element={<Login />} />
+        <Route path='/' exact element={<LoginWrapper />} />
+        <Route path='/forgotPwd' element={<LoginWrapper />} />
+        <Route path='/resetPwd' element={<LoginWrapper />} />
         {/* <Route path='/users' exact element={<UserList />} />
         <Route path='/edit/:id' exact element={<EditExercise />} />
         <Route path='/create' exact element={<AddExercise />} />

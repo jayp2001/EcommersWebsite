@@ -26,6 +26,14 @@
     text-align: center;
 }
 
+.header-reset{
+    margin-top: 50px;
+    font-size: 42px;
+    font-family: 'Sofia';
+    width: 100%;
+    text-align: center;
+}
+
 .input-fields-wrapper{
     padding: 40px 80px;
     height: 540px;
