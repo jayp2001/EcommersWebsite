@@ -2,5 +2,37 @@
     background-color: #fff;
     height: 600px;
     margin-top: 75px;
-    border-radius: 10px;
+    border-radius: 20px;
+    box-shadow: 8px 8px 5px #e9eef7;
+    overflow: hidden;
+}
+.card-left{
+    /* background-color: aqua; */
+    height: 600px;
+}
+.card-right{
+    background-color: #fff;
+    height: 600px;
+}
+.logo-wrapper{
+    margin-top: 60px;
+}
+
+.header{
+    margin-top: 10px;
+    font-size: 32px;
+    width: 50px;
+
+}
+
+.input-fields-wrapper{
+    padding: 40px 80px;
+    height: 540px;
+}
+.field-wrapper{
+    margin-bottom: 20px;
+}
+.field{
+    width: 100%;
+    font-size: 28px;
 }
