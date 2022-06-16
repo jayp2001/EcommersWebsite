@@ -19,10 +19,11 @@
 }
 
 .header{
-    margin-top: 10px;
-    font-size: 32px;
-    width: 50px;
-
+    margin-top: 100px;
+    font-size: 42px;
+    font-family: 'Sofia';
+    width: 100%;
+    text-align: center;
 }
 
 .input-fields-wrapper{
@@ -35,4 +36,21 @@
 .field{
     width: 100%;
     font-size: 28px;
+}
+
+.signIn-btn{
+    width: 190px;
+    height: 50px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: #0a84ff;
+}
+.forgot-btn{
+    width: 190px;
+    border-radius: 5px;
+    height: 50px;
+    color: white;
+    font-size: 18px;
+    background-color: #ff375f;
 }
