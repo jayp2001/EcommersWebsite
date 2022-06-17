@@ -16,7 +16,7 @@ function ForgotPwd(){
             </div>
             <div className='input-fields-wrapper'>
                 <div className='field-wrapper flex justify-center'>
-                    <TextField id="standard-basic" InputProps={{ style: { fontSize: 22 } }} className='field' label="Email" variant="outlined" />
+                    <TextField id="standard-basic" InputProps={{ style: { fontSize: 22 },pattern:"^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$" }} className='field' label="Email" variant="outlined" />
                 </div>
                 {/* <div className='field-wrapper flex justify-center'>
                     <TextField id="standard-basic" InputProps={{ style: { fontSize: 22 } }} className='field' label="Password" variant="outlined" />

@@ -1,0 +1,23 @@
+.product-card{
+    background-color: aqua;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 8px 8px 5px #e9eef7;
+    height: 400px;
+}
+
+.product-discription{
+    height: 25%;
+    width: 100%;
+    background-color: blue;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    
+}
+.product-img{
+    height: 75%;
+    width: 100%;
+    background-color: #fff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
