@@ -1,0 +1,30 @@
+.filter-card{
+    position: static;
+    background-color: #fff;
+    height: 700px;
+    margin-top: 75px;
+    border-radius: 20px;
+    box-shadow: 8px 8px 5px #e9eef7;
+    overflow: hidden;
+}
+.product-wrapper{
+    height: 700px;
+    margin-top: 75px;
+    overflow-y: scroll;
+}
+.filter-header{
+    margin-top: 20px;
+    font-size: 42px;
+    font-family: 'Amita';
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.filter-wrapper{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: red;
+    border-radius: 10px;
+    height: 60px;
+    width: 100%;
+}
