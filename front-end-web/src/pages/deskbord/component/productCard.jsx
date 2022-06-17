@@ -8,7 +8,14 @@ function ProductCard(){
                 <img src={productImg} />
             </div>
             <div className='product-discription'>
-
+                <div className='px-6 py-10 flex justify-between'>
+                    <div className='product-name'>
+                        Iphone 13
+                    </div>
+                    <div className='product-rate'>
+                        $ 1300
+                    </div>
+                </div>
             </div>
         </div>
     )
