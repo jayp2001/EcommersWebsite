@@ -1,5 +1,6 @@
 import './css/productList.css'
 import ProductCard from '../deskbord/component/productCard'
+import TextField from '@mui/material/TextField';
 function ProductList(){
     return(
         <>
@@ -15,7 +16,7 @@ function ProductList(){
                                 </div>
                                 <div className='flex justify-center flex-col px-6'>
                                     <div className='filter-wrapper'>
-
+                                        <TextField label='min-cost'/>
                                     </div>
                                     <div className='filter-wrapper'>
 
