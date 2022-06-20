@@ -5,7 +5,8 @@
     margin-top: 75px;
     border-radius: 20px;
     box-shadow: 8px 8px 5px #e9eef7;
-    overflow: hidden;
+    padding-bottom: 20px;
+    overflow: scroll;
 }
 .product-wrapper{
     height: 700px;
@@ -27,4 +28,26 @@
     border-radius: 10px;
     height: 60px;
     width: 100%;
+}
+
+.apply{
+    padding: 4px;
+    border-radius: 7px;
+    text-align: center;
+    width: 46%;
+    height: 35px;
+    background-color: #00dc80;
+    color: white;
+}
+.reset{
+    padding: 4px;
+    border-radius: 7px;
+    text-align: center;
+    width: 46%;
+    height: 35px;
+    background-color: #ff375f;
+    color: white;
+}
+.bg{
+    background-color: red;
 }
