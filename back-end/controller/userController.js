@@ -30,17 +30,17 @@ const registerUser = asyncHandler(async (req, res) => {
       password,
     })
   
-    // if (user) {
-    //   res.status(201).json({
-    //     _id: user.id,
-    //     name: user.name,
-    //     email: user.email,
-    //     token: generateToken(user._id),
-    //   })
-    // } else {
-    //   res.status(400)
-    //   throw new Error('Invalid user data')
-    // }
+    if (user) {
+      res.status(201).json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user._id),
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid user data')
+    }
   })
 
 const loginUser = asyncHandler(async (req,res) =>{
@@ -52,11 +52,15 @@ const loginUser = asyncHandler(async (req,res) =>{
   const user = await User.findOne({ email })
 
   if (user && password === user.password) {
-    const token = generateToken(user._id);
-    res.cookie("token",token,{
-        expires: new Date(Date.now()+25892000000),
-        httpOnly:true
-    });
+    const token = await generateToken(user._id);
+    // res.header('Access-Control-Allow-Credentials', true);
+    res.cookie("token", token, {
+        domain: 'localhost',
+        sameSite: 'lax',
+        secure: true,
+        expires: new Date(Date.now() + 25892000000),
+        // httpOnly: true
+      });
 
     res.json({
       _id: user.id,
@@ -71,10 +75,8 @@ const loginUser = asyncHandler(async (req,res) =>{
 
 })
 
-const generateToken = (id) => {
-    return jwt.sign({ id }, "123", {
-      expiresIn: '30d',
-    })
+const generateToken = async (id) => {
+    return jwt.sign({ id }, "123",)
   }
 
   module.exports = {

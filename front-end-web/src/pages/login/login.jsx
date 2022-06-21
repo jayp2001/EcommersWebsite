@@ -23,7 +23,7 @@ function Login(){
     const submitLogin = async (e)=>{
        
         e.preventDefault();
-        const res = await axios.post(`${constatnt.DB_URL}login/`,formData);
+        const res = await axios.post(`${constatnt.DB_URL}login/`, formData, { withCredentials: true });
 
         if(res.status === 400 || !res.data){
             console.log(">>>>>>>",res.data)
@@ -31,7 +31,7 @@ function Login(){
         }
         else{
             console.log(">>>>>>>",res.data)
-            // navigate('/deskBoard')
+            navigate('/deskBoard')
         }
     }
 

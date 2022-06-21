@@ -10,7 +10,12 @@ const app = express();
 app.use(cookieParser());
 const port = process.env.PORT || 3600;
 
-app.use(cors());
+app.use(cors({
+  credentials: true, origin: [
+    "http://localhost:3000",
+  ],
+  exposedHeaders: ["set-cookie"],
+}));
 app.use(express.json());
 
 const uri = process.env.MONGOOSE_URI;
