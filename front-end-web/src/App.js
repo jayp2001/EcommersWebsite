@@ -5,11 +5,15 @@ import LoginWrapper from './pages/login/loginWrapper';
 import DeskBoard from './pages/deskbord/deskboard';
 import ProductDetail from './pages/productdetail/productDetail';
 import ProductList from './pages/productList/productList';
+import Nevbar from './navBar/navBar';
 import './App.css';
 
 function App() {
   return (
+    <>
+   
     <BrowserRouter>
+    <Nevbar />
       <Routes>
         <Route path='/' exact element={<LoginWrapper />} />
         <Route path='/forgotPwd' element={<LoginWrapper />} />
@@ -23,6 +27,7 @@ function App() {
         <Route path='/users/create' exact element={<AddUser />} /> */}
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
 

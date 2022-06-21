@@ -1,0 +1,93 @@
+.navBar{
+    height: 55px;
+    background-color: #fff;
+    font-size: 20px;
+}
+.text{
+    border-radius: 7px;
+    border-color: skyblue;
+    border-width: 3px;
+}
+.Home::after{
+    content: '';
+    height: 2px;
+    width: 0%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+}
+.Home:hover::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+}
+.Electronic::after{
+    content: '';
+    height: 2px;
+    width: 0%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+} 
+.Electronic:hover::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+}
+.Fashion::after{
+    content: '';
+    height: 2px;
+    width: 0%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+} 
+.Fashion:hover::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+}
+.Cart::after{
+    content: '';
+    height: 2px;
+    width: 0%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+} 
+.Cart:hover::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+}
+.Support::after{
+    content: '';
+    height: 2px;
+    width: 0%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+} 
+.Support:hover::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: skyblue;
+    display: block;
+    transition: .5s ease-in-out;
+}
+.active{
+    color: skyblue;
+}
