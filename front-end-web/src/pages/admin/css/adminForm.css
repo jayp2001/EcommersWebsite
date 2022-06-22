@@ -1,0 +1,27 @@
+.firest{
+    height: 50px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 8px 8px 5px #e9eef7;
+    margin-top: 40px;
+    background-color: #fff;
+}
+.Hname{
+    margin-top: 10px;
+    font-size: 25px;
+}
+.second{
+    min-height: 350px;
+    padding-bottom: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 8px 8px 5px #e9eef7;
+    background-color: #fff;
+    margin-top: 40px;
+}
+hr{
+    border: 1px solid #000;
+}
+.Nop{
+    margin-top: 20px;
+}

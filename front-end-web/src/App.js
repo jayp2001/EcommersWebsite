@@ -6,6 +6,9 @@ import DeskBoard from './pages/deskbord/deskboard';
 import ProductDetail from './pages/productdetail/productDetail';
 import ProductList from './pages/productList/productList';
 import Nevbar from './navBar/navBar';
+import AdminForms from './pages/admin/pages/adminForm';
+import AdminProfile from './pages/admin/pages/adminProfile';
+import AddCart from './pages/Cart/cart';
 import './App.css';
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
         <Route path='/deskBoard' element={<DeskBoard />} />
         <Route path='/product/:id' element={<ProductDetail />} />
         <Route path='/products' element={<ProductList />} />
+        <Route path='/admin/addProduct' element={<AdminForms />} />
+        <Route path='/admin/adminProfile' element={<AdminProfile />} />
+        <Route path='/cart' element={<AddCart/>} />
         {/* <Route path='/users' exact element={<UserList />} />
         <Route path='/edit/:id' exact element={<EditExercise />} />
         <Route path='/create' exact element={<AddExercise />} />

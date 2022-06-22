@@ -1,5 +1,6 @@
 import { Link,NavLink } from "react-router-dom";
 import "./navBar.css";
+import { TextField } from "@mui/material";
 
 function Nevbar() {
     return(
@@ -18,7 +19,7 @@ function Nevbar() {
                         <NavLink to="/" activeClassName="active" className="Fashion">Fashion</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/" activeClassName="active" className="Cart">Cart</NavLink>
+                        <NavLink to="/cart" activeClassName="active" className="Cart">Cart</NavLink>
                     </div>
                     <div>
                         <NavLink to="/" activeClassName="active" className="Support">Support</NavLink> 
@@ -30,7 +31,14 @@ function Nevbar() {
                 <div className="grid grid-cols-12">
                     <div className="col-span-8 col-start-2 flex justify-between">
                         <div>
-                            <input type="text" placeholder="Search..." className="text"/>
+                        <TextField
+                            hiddenLabel
+                            id="filled-hidden-label-small"
+                            placeholder="Search"
+                            className="text"
+                            variant="standard"
+                            size="small"
+                        />
                             <button className="Button ml-6">Search</button>
                         </div>
                         <div>
