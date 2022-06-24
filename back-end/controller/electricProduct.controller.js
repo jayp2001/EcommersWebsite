@@ -20,18 +20,6 @@ const addElectricProduct = asyncHandler(async (req, res) => {
       throw new Error('Please add all fields')
     }
   
-    // Check if user exists
-    // const userExists = await User.findOne({ email })
-  
-    // if (userExists) {
-    //   res.status(400)
-    //   throw new Error('User already exists')
-    // }
-  
-    // Hash password
-    // const salt = await bcrypt.genSalt(10)
-    // const hashedPassword = await bcrypt.hash(password, salt)
-  
     // Create user
     const electricProduct = await ElectricProduct.create({
         name ,brandName ,feature ,discription ,status ,type ,price ,quantity
@@ -39,7 +27,7 @@ const addElectricProduct = asyncHandler(async (req, res) => {
   
     if (electricProduct) {
       res.status(201).json({
-        _id: user.id,
+        _id: electricProduct._id,
       })
     } else {
       res.status(400)
