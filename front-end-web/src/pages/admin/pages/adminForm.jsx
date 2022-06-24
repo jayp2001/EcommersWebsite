@@ -70,6 +70,26 @@ function AdminForms() {
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
+                                    <FormControl sx={{ m: 1, minWidth: 625 }}>
+                                        <InputLabel id="demo-controlled-open-select-label">Product Category</InputLabel>
+                                        <Select 
+                                        labelId="demo-controlled-open-select-label"
+                                        id="demo-controlled-open-select"
+                                        label="Product Category"
+                                        >
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value={1}>Electric</MenuItem>
+                                        <MenuItem value={2}>Fashion</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-12">
+                            <div className="col-start-3 col-span-8">
+                                 <div className="Nop">
                                      <TextField fullWidth label="Features" id="features" value={newData.features} onChange={nameChange} multiline rows={2} />
                                 </div>
                             </div>

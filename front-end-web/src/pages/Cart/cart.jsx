@@ -47,7 +47,7 @@ function AddCart(){
                 <div className="col-start-1 col-span-7">
                     <div className="grid grid-cols-12 pl-6 mt-10 gap-8">
                             {data.map((product,index)=>(
-                                <div className="col-span-4">
+                                <div className="col-span-5">
                                     <CartProductCard product={product}/>
                                 </div>
                             ))}
