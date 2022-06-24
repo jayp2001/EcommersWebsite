@@ -1,23 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Amita');
 
-.product-card{
+.ProductCard{
     /* background-color: aqua; */
     width: 100%;
     border-radius: 10px;
     box-shadow: 8px 8px 5px #e9eef7;
-    height: 400px;
+    height: 490px;
+    margin: 30px;
 }
 
-.product-discription{
-    height: 25%;
+.Product-discription{
+    height: 40%;
     width: 100%;
     background-color: #fff;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     
 }
-.product-img{
-    height: 75%;
+.product-image{
+    height: 60%;
     width: 100%;
     background-color: #fff;
     border-top-right-radius: 10px;
@@ -28,13 +29,75 @@
     font-size: 24px;
     font-family: 'Amita';
 }
-
+.btnAdd{
+    height: 36px;
+    width: 36px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: #00dc80;
+    margin: 6px;
+    margin-left: 10px;
+}
+.btnAdd:hover{
+    transform: scale(1.03);
+}
+.btnSub{
+    height: 36px;
+    width: 36px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: #ff375f;
+    margin: 6px;
+}
+.btnSub:hover{
+    transform: scale(1.03);
+}
 .product-rate{
     font-size: 24px;
     font-family: 'Amita';
 }
 
-.product-card:hover {
+.ProductCard:hover {
     cursor: pointer;
     transform: scale(1.07);
+}
+.AdderText{
+    height: 30px;
+    width: 70px;
+    border: 3px solid;
+    border-color: skyblue;
+    border-radius: 5px;
+    margin: 6px;
+    margin-top: 9px;
+    text-align: center;
+}
+.btnCart{
+    width: 135px;
+    height: 30px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: #ff375f;
+}
+.btnCart:hover{
+    animation: shake 0.6s infinite;
+}
+@keyframes shake {
+    0%{
+        transform: translate(0px,0px) rotate(0deg);
+    }
+    25%{
+        transform: translate(1px,1px) rotate(1deg);
+    }
+    50%{
+        transform: translate(-1px,-1px) rotate(-1deg);
+    }
+    75%{
+        transform: translate(2px,-1px) rotate(2deg);
+    }
+    100%{
+        transform: translate(-1px,1px) rotate(-1deg);
+    }
 }
