@@ -9,6 +9,7 @@ const {protect} = require('../middleware/authMiddleWare')
 router.post('/',loginUser);
 router.get('/get',protect,getUser);
 router.post('/register', registerUser)
+
 // router.route('/').get((req,res) => {
 //     user.find()
 //     .then(users => res.json(users))

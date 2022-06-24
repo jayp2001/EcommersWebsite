@@ -26,9 +26,10 @@ const connection = mongoose.connection;
 
 // const exerciseRouter = require('./routes/exercise');
 const login = require('./routes/user');
+const { addElectricProduct } = require('./controller/electricProduct.controller');
 
 app.use('/login',login);
-
+app.use('/product',addElectricProduct);
 
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
