@@ -3,6 +3,17 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 
+const getUser =(req,res)=>{
+
+  User.find()
+  .then(users => res.json(users))
+  
+// else{
+//   res.status(400)
+//       throw new Error('User')
+// }
+}
+
 const registerUser = asyncHandler(async (req, res) => {
     const { userName, email, password } = req.body
   
@@ -53,20 +64,21 @@ const loginUser = asyncHandler(async (req,res) =>{
 
   if (user && password === user.password) {
     const token = await generateToken(user._id);
-    // res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Credentials', true);
     res.cookie("token", token, {
         domain: 'localhost',
         sameSite: 'lax',
         secure: true,
         expires: new Date(Date.now() + 25892000000),
-        // httpOnly: true
+        httpOnly: true
       });
-
+    // res.sendRedirect('/cart')
+    // res.edirect()
     res.json({
       _id: user.id,
       name: user.name,
       email: user.email,
-      token: generateToken(user._id),
+      token: await generateToken(user._id),
     })
   } else {
     res.status(400)
@@ -81,5 +93,5 @@ const generateToken = async (id) => {
 
   module.exports = {
     loginUser,
-    registerUser
+    registerUser,getUser
   }

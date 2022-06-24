@@ -13,6 +13,7 @@ const port = process.env.PORT || 3600;
 app.use(cors({
   credentials: true, origin: [
     "http://localhost:3000",
+    "http://localhost:5000"
   ],
   exposedHeaders: ["set-cookie"],
 }));
