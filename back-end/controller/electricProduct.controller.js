@@ -31,7 +31,16 @@ const addElectricProduct = asyncHandler(async (req, res) => {
     .then(electricProduct => res.json(electricProduct))
     .catch(err => res.status(400).json('Error: ' + err));
   }
+
+  //Delete Electric Product
+
+  const deleteElectricProduct = (req,res) => {
+    ElectricProduct.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Product Deleted Sucessfully'))
+    .catch(err => res.status(400).json('Error: '+err));
+};
+
  
   module.exports = {
-    addElectricProduct,getElectricProduct
+    addElectricProduct,getElectricProduct,deleteElectricProduct
   }

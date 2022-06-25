@@ -33,7 +33,15 @@ const addFashionProduct = asyncHandler(async (req, res) => {
     .then(fashionProduct => res.json(fashionProduct))
     .catch(err => res.status(400).json('Error: ' + err));
   }
+
+  //Delete Fashion Product
+
+ const deleteFashionProduct = (req,res) => {
+    FashionProduct.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Product Deleted Sucessfully'))
+    .catch(err => res.status(400).json('Error: '+err));
+ };
  
   module.exports = {
-    addFashionProduct,getFashionProduct
+    addFashionProduct,getFashionProduct,deleteFashionProduct
   }
