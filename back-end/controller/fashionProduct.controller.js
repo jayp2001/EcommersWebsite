@@ -1,16 +1,7 @@
 let FashionProduct = require('../model/fashionProduct.model');
 const asyncHandler = require('express-async-handler')
-
-const getElectricProduct =(req,res)=>{
-
-  FashionProduct.find()
-  .then(fashionProduct => res.json(fashionProduct))
   
-// else{
-//   res.status(400)
-//       throw new Error('User')
-// }
-}
+
 
 const addFashionProduct = asyncHandler(async (req, res) => {
     const {name ,brandName ,discription ,size ,fashionCategory ,status ,type ,price ,quantity } = req.body
@@ -34,7 +25,15 @@ const addFashionProduct = asyncHandler(async (req, res) => {
       throw new Error('Unsuccessfull')
     }
   })
+
+  //Get Fashion Product
+
+  const getFashionProduct =(req,res)=>{
+    FashionProduct.find()
+    .then(fashionProduct => res.json(fashionProduct))
+    .catch(err => res.status(400).json('Error: ' + err));
+  }
  
   module.exports = {
-    addFashionProduct
+    addFashionProduct,getFashionProduct
   }

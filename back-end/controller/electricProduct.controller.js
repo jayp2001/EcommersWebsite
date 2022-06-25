@@ -1,17 +1,6 @@
 let ElectricProduct = require('../model/electricProduct.model');
 const asyncHandler = require('express-async-handler')
 
-const getElectricProduct =(req,res)=>{
-
-  ElectricProduct.find()
-  .then(electricProduct => res.json(electricProduct))
-  
-// else{
-//   res.status(400)
-//       throw new Error('User')
-// }
-}
-
 const addElectricProduct = asyncHandler(async (req, res) => {
     const {name ,brandName ,feature ,discription ,status ,type ,price ,quantity } = req.body
   
@@ -35,8 +24,14 @@ const addElectricProduct = asyncHandler(async (req, res) => {
     }
   })
 
-  // Check for user email
+  // Get Electric Product
+
+  const getElectricProduct = (req,res) =>{
+    ElectricProduct.find()
+    .then(electricProduct => res.json(electricProduct))
+    .catch(err => res.status(400).json('Error: ' + err));
+  }
  
   module.exports = {
-    addElectricProduct
+    addElectricProduct,getElectricProduct
   }
