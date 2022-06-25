@@ -1,5 +1,6 @@
 import "../css/adminProfile.css";
 import * as React from 'react';
+import {useEffect,useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,22 +8,24 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from "axios";
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteIcon from '@mui/icons-material/Delete';
+import * as constatnt from '../../../constatnt/auth';
 
 
 function AdminProfile(){
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
-      
-      const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0 ,),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-      ];
+    const [productList,setProductList] = useState();
+    useEffect(()=>{
+        const res = axios.get(`${constatnt.DB_URL}product/getElectricProduct`)
+        .then(res=> setProductList(res.data))
+        console.log(res)
+        // if(res.data)
+            // setProductList(res.data)
+    },[setProductList])
+    if(!productList){
+        return null
+    }
     return(
         <>
         <div className="grid grid-cols-12">
@@ -43,18 +46,18 @@ function AdminProfile(){
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {rows.map((row) => (
+                            {productList.map((row,index) => (
                                 <TableRow
-                                key={row.name}
+                                key={index}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell align="right">{row.brandName}</TableCell>
+                                <TableCell align="right">{row.price}</TableCell>
+                                <TableCell align="right">{row.quantity}</TableCell>
+                                <TableCell align="right">{row.status}</TableCell>
                                 <TableCell align="right"><button className="Edit"><EditTwoToneIcon/></button></TableCell>
                                 <TableCell align="right"><button className="Delete"><DeleteIcon/></button></TableCell> 
                                 </TableRow>
