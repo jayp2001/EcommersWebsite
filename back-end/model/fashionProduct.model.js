@@ -21,11 +21,6 @@ const fashionProductSchema = new Schema({
     },
     size : []
     ,
-    fashionCategory: {
-        required: true,
-        type: String,
-        trim: true,
-    },
     status : {
         required: true,
         type: String,
