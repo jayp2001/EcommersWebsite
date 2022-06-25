@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler')
 
 const getElectricProduct =(req,res)=>{
 
-  electricProduct.find()
+  ElectricProduct.find()
   .then(electricProduct => res.json(electricProduct))
   
 // else{

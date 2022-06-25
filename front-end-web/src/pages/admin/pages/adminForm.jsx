@@ -7,40 +7,93 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import axios from "axios";
+import * as constatnt from '../../../constatnt/auth';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
+const names = [
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  'XXXL',
+  'Miriam Wagner',
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 function AdminForms() {
-    const [data,setData]=useState({
-        name:"",
-        brandName:"",
-        features:"",
-        price:0,
-        qut:"",
+
+    const theme = useTheme();
+    const [personName, setPersonName] = React.useState([]);
+
+    const handleChange = (event) => {
+        const {
+        target: { value },
+        } = event;
+        setPersonName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+
+    const [category,setCategory] = useState("Electric");
+
+    const [formdata,setFormdata] = useState({
+        name : '',
+        brandName : '',
+        feature : '',
+        discription : '',
+        status : '',
+        type : '',
+        price : 0,
+        quantity : 0,
     })
 
-    const [newData,setNewdata]=useState({
-        name:"",
-        brandName:"",
-        features:"",
-        price:0,
-        qut:"",
-    });
-
-    const nameChange = () =>{
-        const datatemp = {
-        name: document.getElementById('name').value,
-        brandName: document.getElementById('brandName').value,
-        features: document.getElementById('features').value,
-        price: document.getElementById('price').value,
-        qut: document.getElementById('qut').value,
-        }
-        setNewdata(datatemp);
-    }
-    const resetdata = () =>{    
-        setNewdata(data);
+    const onchange = (e) => {
+        setFormdata((prevState) => ({
+            ...prevState,
+          [e.target.name]: e.target.value,
+        }))
     }
 
+    const changeCategory = (e) => {
+        setCategory(e.target.value);
+        // console.log(">>>>>>>>>>>>>>>>>",category);
+        // setCategory((prevState) => ({
+        //     ...prevState,
+        //   [e.target.name]: e.target.value,
+        // }))
+        // console.log("<<<<<<<<<<<<<<<<<<<<<<",category);
+    }
+
+    const submitAddProduct = async (e)=>{
+       
+        e.preventDefault();
+        console.log(">>>>>",formdata)
+        const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, formdata);
+
+    }
     return(
         <>
             <div className="grid grid-cols-12">
@@ -56,14 +109,14 @@ function AdminForms() {
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                     <TextField fullWidth label="Name Of Product" value={newData.name} onChange={nameChange} id="name" />
+                                     <TextField fullWidth label="Name Of Product" name="name" value={formdata.name} onChange={onchange} id="name" />
                                 </div>
                             </div>
                         </div>
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                     <TextField fullWidth label="Name Of Brand" value={newData.brandName} onChange={nameChange} id="brandName" />
+                                     <TextField fullWidth label="Name Of Brand" name="brandName" value={formdata.brandName} onChange={onchange} id="brandName" />
                                 </div>
                             </div>
                         </div>
@@ -76,38 +129,140 @@ function AdminForms() {
                                         labelId="demo-controlled-open-select-label"
                                         id="demo-controlled-open-select"
                                         label="Product Category"
+                                        value={category}
+                                        name="category"
+                                        onChange={changeCategory}
                                         >
-                                        <MenuItem value="">
+                                        {/* <MenuItem value="">
                                             <em>None</em>
-                                        </MenuItem>
-                                        <MenuItem value={1}>Electric</MenuItem>
-                                        <MenuItem value={2}>Fashion</MenuItem>
+                                        </MenuItem> */}
+                                        <MenuItem value="Electric">Electric</MenuItem>
+                                        <MenuItem value="Fashion">Fashion</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
                             </div>
                         </div>
+
+                        {category === 'Fashion' ? 
+                        <>
+                            <div className="grid grid-cols-12">
+                                <div className="col-start-3 col-span-8">
+                                    <div className="Nop">
+                                    <FormControl sx={{ m: 1, width: 630 }}>
+                                        <InputLabel id="demo-multiple-name-label">Size</InputLabel>
+                                        <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={personName}
+                                        onChange={handleChange}
+                                        input={<OutlinedInput label="Size" />}
+                                        MenuProps={MenuProps}
+                                        >
+                                        {names.map((name) => (
+                                            <MenuItem
+                                            key={name}
+                                            value={name}
+                                            style={getStyles(name, personName, theme)}
+                                            >
+                                            {name}
+                                            </MenuItem>
+                                        ))}
+                                        </Select>
+                                    </FormControl>
+                                    </div>
+                                </div>
+                            </div>
+                             <div className="grid grid-cols-12">
+                             <div className="col-start-3 col-span-8">
+                                  <div className="Nop">
+                                     <FormControl sx={{ m: 1, minWidth: 625 }}>
+                                         <InputLabel id="demo-controlled-open-select-label">Fashion Category</InputLabel>
+                                         <Select 
+                                         labelId="demo-controlled-open-select-label"
+                                         id="demo-controlled-open-select"
+                                         label="Fashion Category"
+                                         value={formdata.fashionCategory}
+                                         name="fashionCategory"
+                                         onChange={onchange}
+                                         >
+                                         <MenuItem value="">
+                                             <em>None</em>
+                                         </MenuItem>
+                                         <MenuItem value="Men's Wear">Men's Wear</MenuItem>
+                                         <MenuItem value="Women's Wear">Women's Wear</MenuItem>
+                                         </Select>
+                                     </FormControl>
+                                 </div>
+                             </div>
+                         </div>
+                         </>
+                            :
+                            null 
+                    }
+
+                    {category === 'Electric' ? 
+                    
+
+                    <div className="grid grid-cols-12">
+                    <div className="col-start-3 col-span-8">
+                         <div className="Nop">
+                             <TextField fullWidth label="Features" id="feature" name="feature" value={formdata.feature} onChange={onchange} multiline rows={2} />
+                        </div>
+                    </div>
+                </div>
+                :
+                null
+                }
+
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                     <TextField fullWidth label="Features" id="features" value={newData.features} onChange={nameChange} multiline rows={2} />
+                                     <TextField fullWidth label="discription" name="discription" id="discription" value={formdata.discription} onChange={onchange} multiline rows={2} />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-12">
+                            <div className="col-start-3 col-span-8">
+                                 <div className="Nop">
+                                 <TextField fullWidth label="Price Of Product" name="price" value={formdata.price} onChange={onchange}  id="price" />
                                 </div>
                             </div>
                         </div>
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                 <TextField fullWidth label="Price Of Product" value={newData.price} onChange={nameChange}  id="price" />
+                                 <TextField fullWidth label="Quantity" name="quantity"  id="quantity" value={formdata.quantity} onChange={onchange} type="number" InputLabelProps={{shrink: true,}} />
                                 </div>
                             </div>
                         </div>
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                 <TextField fullWidth label="Quantity"  id="qut" value={newData.qut} onChange={nameChange} type="number" InputLabelProps={{shrink: true,}} />
+                                    <FormControl sx={{ m: 1, minWidth: 625 }}>
+                                        <InputLabel id="demo-controlled-open-select-label">Type of Product</InputLabel>
+                                        <Select 
+                                        labelId="demo-controlled-open-select-label"
+                                        id="demo-controlled-open-select"
+                                        label="Type Of Product"
+                                        value={formdata.type}
+                                        name="type"
+                                        onChange={onchange}
+                                        >
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value="Mobile">Mobile</MenuItem>
+                                        <MenuItem value="Computer/Laptop">Computer/Laptop</MenuItem>
+                                        <MenuItem value="Accessories">Accessories</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
                         </div>
+                       
                         {/* <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
@@ -124,13 +279,16 @@ function AdminForms() {
                                         labelId="demo-controlled-open-select-label"
                                         id="demo-controlled-open-select"
                                         label="Status"
+                                        value={formdata.status}
+                                        name="status"
+                                        onChange={onchange}
                                         >
                                         <MenuItem value="">
                                             <em>None</em>
                                         </MenuItem>
-                                        <MenuItem value={1}>On Stock</MenuItem>
-                                        <MenuItem value={2}>Out Of Stock</MenuItem>
-                                        <MenuItem value={3}>Empty</MenuItem>
+                                        <MenuItem value="On Stock">On Stock</MenuItem>
+                                        <MenuItem value="Out Of Stock">Out Of Stock</MenuItem>
+                                        <MenuItem value="Empty">Empty</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -140,8 +298,8 @@ function AdminForms() {
                         <div className="grid grid-cols-12">
                             <div className="col-start-4 col-span-3">
                                  <div className="Nop flex justify-between">
-                                 <Button variant="contained" color="success">SUBMIT</Button>
-                                 <Button variant="contained" color="info" onClick={()=>resetdata()}>RESET</Button>
+                                 <Button variant="contained" color="success" onClick={submitAddProduct}>SUBMIT</Button>
+                                 <Button variant="contained" color="info">RESET</Button>
                                 </div>
                             </div>
                         </div>
