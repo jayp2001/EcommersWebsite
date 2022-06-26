@@ -3,7 +3,7 @@ import { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import axios from 'axios'
 import * as constatnt from '../../constatnt/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function Login(){
     const [formData, setFormData] = useState({
         email: '',
@@ -50,7 +50,10 @@ function Login(){
                 <div className='field-wrapper flex justify-center'>
                     <TextField name='password' value={formData.password} onChange={onChange}  InputProps={{ style: { fontSize: 22 } }} className='field' label="Password" variant="outlined" />
                 </div>
-                <div className='flex justify-between mt-12'>
+                <div className='signUp'>
+                    <Link to={'/signUp'}><u>SignUp</u></Link>
+                </div>
+                <div className='flex justify-between mt-8'>
                     <div><button className='signIn-btn' onClick={submitLogin}>Sign In</button></div>
                     <div><button className='forgot-btn' onClick={()=>forgotPwd()}>Forgot Password</button></div>
                 </div>

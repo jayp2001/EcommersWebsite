@@ -25,8 +25,6 @@ const addElectricProduct = asyncHandler(async (req, res) => {
     }
   })
 
-  // Get Electric Product
-
   //Delete Electric Product
 
   const deleteElectricProduct = asyncHandler(async (req,res,next) => {
@@ -44,6 +42,8 @@ const addElectricProduct = asyncHandler(async (req, res) => {
    
 });
 
+  //Get Electric Product
+
   const getElectricProduct = asyncHandler(async (req,res) =>{
     const data =await ElectricProduct.find()
     res.status(200).json(data);
@@ -51,6 +51,29 @@ const addElectricProduct = asyncHandler(async (req, res) => {
     // .catch(err => res.status(400).json('Error: ' + err));
   })
  
+  //UPDATE Electric Product
+
+  const  updateElectricProduct = asyncHandler(async(req,res)=>{
+    await ElectricProduct.findById(req.params.id)
+    .then(updateElectricProduct =>{
+      updateElectricProduct.name = req.body.name ? req.body.name : updateElectricProduct.name;
+      updateElectricProduct.brandName = req.body.brandName ? req.body.brandName : updateElectricProduct.brandName;
+      updateElectricProduct.feature = req.body.feature ? req.body.feature : updateElectricProduct.feature;
+      updateElectricProduct.discription = req.body.discription ? req.body.discription : updateElectricProduct.discription;
+      updateElectricProduct.status = req.body.status ? req.body.status : updateElectricProduct.status;
+      updateElectricProduct.type = req.body.type ? req.body.type : updateElectricProduct.type;
+      updateElectricProduct.price = req.body.price ? req.body.price : updateElectricProduct.price;
+      updateElectricProduct.quantity = req.body.quantity ? req.body.quantity : updateElectricProduct.quantity;
+
+      updateElectricProduct.save()
+        .then(() => res.json('Product Update Successfully'))
+        .catch(err => res.status(400).json('Error: '+err));
+    })
+    .catch(err => res.status(400).json('Error: '+err));
+  })
+
+
+
   module.exports = {
-    addElectricProduct,getElectricProduct,deleteElectricProduct
+    addElectricProduct,getElectricProduct,deleteElectricProduct,updateElectricProduct
   }

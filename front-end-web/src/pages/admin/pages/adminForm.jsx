@@ -6,40 +6,55 @@ import { useState } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
 import * as constatnt from '../../../constatnt/auth';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  'XXXL',
+  'Miriam Wagner',
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 function AdminForms() {
 
     const theme = useTheme();
-
-    const [categoryTypeOfFashionProduct, setCategoryTypeOfFashionProduct] = useState([
-        "Men's wear",
-        "Women's wear"
-    ])
-
-    const [categoryTypeOfElectricProduct, setCategoryTypeOfElectricProduct] = useState([
-        "Mobile",
-        "Laptop",
-        "Accessories"
-    ])
+    const [personName, setPersonName] = React.useState([]);
 
     const handleChange = (event) => {
         const {
         target: { value },
         } = event;
-        setFormdata((prevState) => ({
-            ...prevState,
-          size: typeof value === 'string' ? value.split(',') : value,
-        }))
-        // setPersonName(
-        // // On autofill we get a stringified value.
-        // // typeof value === 'string' ? value.split(',') : value,
-        // );
+        setPersonName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
     const [category,setCategory] = useState("Electric");
@@ -53,40 +68,7 @@ function AdminForms() {
         type : '',
         price : 0,
         quantity : 0,
-        size:[]
     })
-
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-    PaperProps: {
-        style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-        },
-    },
-    };
-
-    const names = [
-    'S',
-    'M',
-    'L',
-    'XL',
-    'XXL',
-    'XXXL',
-    'Miriam Wagner',
-    ];
-
-
-    function getStyles(name, size, theme) {
-    return {
-        fontWeight:
-        size.indexOf(name) === -1
-            ? theme.typography.fontWeightRegular
-            : theme.typography.fontWeightMedium,
-    };
-    }
-
 
     const onchange = (e) => {
         setFormdata((prevState) => ({
@@ -97,40 +79,19 @@ function AdminForms() {
 
     const changeCategory = (e) => {
         setCategory(e.target.value);
+        // console.log(">>>>>>>>>>>>>>>>>",category);
+        // setCategory((prevState) => ({
+        //     ...prevState,
+        //   [e.target.name]: e.target.value,
+        // }))
+        // console.log("<<<<<<<<<<<<<<<<<<<<<<",category);
     }
 
     const submitAddProduct = async (e)=>{
+       
         e.preventDefault();
         console.log(">>>>>",formdata)
-        if(category === "Electric"){
-            const electicProduct = {
-                name : formdata.name,
-                brandName : formdata.brandName,
-                feature : formdata.feature,
-                discription : formdata.discription,
-                status : formdata.status,
-                type : formdata.type,
-                price : formdata.price,
-                quantity : formdata.quantity,
-            }
-            console.log(">>>>>",formdata)
-            const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, electicProduct);
-        }
-        else{
-            const fashionProduct = {
-                name : formdata.name,
-                brandName : formdata.brandName,
-                discription : formdata.discription,
-                status : formdata.status,
-                type : formdata.type,
-                price : formdata.price,
-                quantity : formdata.quantity,
-                size:formdata.size
-            }
-            console.log(">>>>>",formdata)
-            const res = await axios.post(`${constatnt.DB_URL}product/addFashionProduct`, fashionProduct);
-        }
-        
+        const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, formdata);
 
     }
     return(
@@ -194,8 +155,7 @@ function AdminForms() {
                                         labelId="demo-multiple-name-label"
                                         id="demo-multiple-name"
                                         multiple
-                                        value={formdata.size}
-                                        name="size"
+                                        value={personName}
                                         onChange={handleChange}
                                         input={<OutlinedInput label="Size" />}
                                         MenuProps={MenuProps}
@@ -204,7 +164,7 @@ function AdminForms() {
                                             <MenuItem
                                             key={name}
                                             value={name}
-                                            style={getStyles(name, formdata.size, theme)}
+                                            style={getStyles(name, personName, theme)}
                                             >
                                             {name}
                                             </MenuItem>
@@ -214,6 +174,29 @@ function AdminForms() {
                                     </div>
                                 </div>
                             </div>
+                             <div className="grid grid-cols-12">
+                             <div className="col-start-3 col-span-8">
+                                  <div className="Nop">
+                                     <FormControl sx={{ m: 1, minWidth: 625 }}>
+                                         <InputLabel id="demo-controlled-open-select-label">Fashion Category</InputLabel>
+                                         <Select 
+                                         labelId="demo-controlled-open-select-label"
+                                         id="demo-controlled-open-select"
+                                         label="Fashion Category"
+                                         value={formdata.fashionCategory}
+                                         name="fashionCategory"
+                                         onChange={onchange}
+                                         >
+                                         <MenuItem value="">
+                                             <em>None</em>
+                                         </MenuItem>
+                                         <MenuItem value="Men's Wear">Men's Wear</MenuItem>
+                                         <MenuItem value="Women's Wear">Women's Wear</MenuItem>
+                                         </Select>
+                                     </FormControl>
+                                 </div>
+                             </div>
+                         </div>
                          </>
                             :
                             null 
@@ -232,7 +215,6 @@ function AdminForms() {
                 :
                 null
                 }
-
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
@@ -268,25 +250,12 @@ function AdminForms() {
                                         name="type"
                                         onChange={onchange}
                                         >
-                                        {category === "Fashion"? categoryTypeOfFashionProduct.map((name) => (
-                                            <MenuItem
-                                            key={name}
-                                            value={name}
-                                            style={getStyles(name, formdata.size, theme)}
-                                            >
-                                            {name}
-                                            </MenuItem>
-                                        )):
-                                        categoryTypeOfElectricProduct.map((name) => (
-                                            <MenuItem
-                                            key={name}
-                                            value={name}
-                                            style={getStyles(name, formdata.size, theme)}
-                                            >
-                                            {name}
-                                            </MenuItem>
-                                        ))
-                                    }
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value="Mobile">Mobile</MenuItem>
+                                        <MenuItem value="Computer/Laptop">Computer/Laptop</MenuItem>
+                                        <MenuItem value="Accessories">Accessories</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>

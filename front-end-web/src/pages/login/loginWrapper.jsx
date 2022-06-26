@@ -3,6 +3,8 @@ import logo from '../assets/ecommerce.svg'
 import Login from './login';
 import ForgotPwd from './forgotPwd';
 import ResetPwd from './resetPwd';
+import SignUp from './signUp';
+
 // import "https://cdn.tailwindcss.com";
 function LoginWrapper(){
     console.log(window.location.pathname);
@@ -19,6 +21,7 @@ function LoginWrapper(){
                         {window.location.pathname === "/" && <Login />}
                         {window.location.pathname === "/forgotPwd" && <ForgotPwd />}
                         {window.location.pathname === "/resetPwd" && <ResetPwd />}
+                        {window.location.pathname === "/signUp" && <SignUp />}
                         {/* <Login /> */}
                     </div>
                 </div>

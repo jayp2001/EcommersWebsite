@@ -20,6 +20,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={<LoginWrapper />} />
         <Route path='/forgotPwd' element={<LoginWrapper />} />
+        <Route path='/signUp' element={<LoginWrapper />} />
         <Route path='/resetPwd' element={<LoginWrapper />} />
         <Route path='/deskBoard' element={<DeskBoard />} />
         <Route path='/product/:id' element={<ProductDetail />} />

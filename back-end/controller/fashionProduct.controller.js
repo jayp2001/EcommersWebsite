@@ -41,8 +41,9 @@ const addFashionProduct = asyncHandler(async (req, res) => {
     catch(error){
       throw new Error('Unsuccessfull')
     }
-   
 });
+
+    //Get Fashion Product
 
 const getFashionProduct = asyncHandler(async (req,res) =>{
     const data =await FashionProduct.find()
@@ -50,7 +51,28 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
     // .then(electricProduct => res.json(electricProduct))
     // .catch(err => res.status(400).json('Error: ' + err));
   })
+
+    //UPDATE Fashion Product
+
+    const  updateFashionProduct = asyncHandler(async(req,res)=>{
+        await FashionProduct.findById(req.params.id)
+        .then(updateFashionProduct =>{
+          updateFashionProduct.name = req.body.name ? req.body.name : updateFashionProduct.name;
+          updateFashionProduct.brandName = req.body.brandName ? req.body.brandName : updateFashionProduct.brandName;
+          updateFashionProduct.size = req.body.size ? req.body.size : updateFashionProduct.size;
+          updateFashionProduct.discription = req.body.discription ? req.body.discription : updateFashionProduct.discription;
+          updateFashionProduct.status = req.body.status ? req.body.status : updateFashionProduct.status;
+          updateFashionProduct.type = req.body.type ? req.body.type : updateFashionProduct.type;
+          updateFashionProduct.price = req.body.price ? req.body.price : updateFashionProduct.price;
+          updateFashionProduct.quantity = req.body.quantity ? req.body.quantity : updateFashionProduct.quantity;
+    
+          updateFashionProduct.save()
+            .then(() => res.json('Product Update Successfully'))
+            .catch(err => res.status(400).json('Error: '+err));
+        })
+        .catch(err => res.status(400).json('Error: '+err));
+      })
  
   module.exports = {
-    addFashionProduct,getFashionProduct,deleteFashionProduct
+    addFashionProduct,getFashionProduct,deleteFashionProduct,updateFashionProduct
   }
