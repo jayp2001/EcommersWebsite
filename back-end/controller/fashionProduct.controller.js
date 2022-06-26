@@ -26,21 +26,30 @@ const addFashionProduct = asyncHandler(async (req, res) => {
     }
   })
 
-  //Get Fashion Product
-
-  const getFashionProduct =(req,res)=>{
-    FashionProduct.find()
-    .then(fashionProduct => res.json(fashionProduct))
-    .catch(err => res.status(400).json('Error: ' + err));
-  }
 
   //Delete Fashion Product
 
- const deleteFashionProduct = (req,res) => {
-    FashionProduct.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Product Deleted Sucessfully'))
-    .catch(err => res.status(400).json('Error: '+err));
- };
+  const deleteFashionProduct = asyncHandler(async (req,res,next) => {
+    try{
+      await FashionProduct.findByIdAndDelete(req.params.id)
+      //   .then(() => {res.json('Product Deleted Sucessfully')
+      // })
+      //   .catch(err => res.status(400).json('Error: '+err));
+    
+        next()
+    }
+    catch(error){
+      throw new Error('Unsuccessfull')
+    }
+   
+});
+
+const getFashionProduct = asyncHandler(async (req,res) =>{
+    const data =await FashionProduct.find()
+    res.status(200).json(data);
+    // .then(electricProduct => res.json(electricProduct))
+    // .catch(err => res.status(400).json('Error: ' + err));
+  })
  
   module.exports = {
     addFashionProduct,getFashionProduct,deleteFashionProduct

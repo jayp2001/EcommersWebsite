@@ -14,7 +14,7 @@ router.delete('/deleteElectricProduct/:id',deleteElectricProduct,getElectricProd
 //Fashion Product
 router.post('/addFashionProduct',addFashionProduct);
 router.get('/getFashionProduct',getFashionProduct);
-router.delete('/deleteFashionProduct/:id',deleteFashionProduct);
+router.delete('/deleteFashionProduct/:id',deleteFashionProduct,getFashionProduct);
 
 
 
