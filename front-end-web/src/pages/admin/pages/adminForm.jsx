@@ -2,7 +2,7 @@ import "../css/adminForm.css";
 import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -11,11 +11,30 @@ import axios from "axios";
 import * as constatnt from '../../../constatnt/auth';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useNavigate } from 'react-router-dom';
 
 
 function AdminForms() {
 
     const theme = useTheme();
+    let navigate = useNavigate();
+    useEffect(()=>{
+        const res = axios.get(`${constatnt.DB_URL}auth/myRights`,{ withCredentials: true })
+        .then((res)=>{
+            if(res.data === process.env.REACT_APP_CLIENT){
+                console.log(">>>",res)
+                navigate('/deskBoard')
+            }
+            else if(res.data === process.env.REACT_APP_ERROR){
+                navigate('/')
+                console.log(">>>",res)
+            }
+            else{
+                console.log(">>>",res)
+            }
+        })
+        // console.log(process.env.REACT_APP_ADMIN);
+    },[])
 
     const [categoryTypeOfFashionProduct, setCategoryTypeOfFashionProduct] = useState([
         "Men's wear",
@@ -27,7 +46,7 @@ function AdminForms() {
         "Laptop",
         "Accessories"
     ])
-
+    // console.log(process.env.REACT_APP_ADMIN);
     const handleChange = (event) => {
         const {
         target: { value },
