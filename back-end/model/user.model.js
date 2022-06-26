@@ -15,6 +15,10 @@ const userSchema = new Schema({
         unique:true,
         required: true
     },
+    rights : {
+        type: String,
+        default:"CLIENT"
+    },
     password : {
         type: String,
         required: true

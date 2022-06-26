@@ -15,14 +15,16 @@ const getUser =(req,res)=>{
 }
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { userName, email, password } = req.body
+    const formData = req.body
+    // const { userName, email, password } = req.body
   
-    if (!userName || !email || !password) {
+    if (!formData.userName || !formData.email || !formData.password) {
       res.status(400)
       throw new Error('Please add all fields')
     }
   
     // Check if user exists
+    const email = formData.email
     const userExists = await User.findOne({ email })
   
     if (userExists) {
@@ -35,18 +37,23 @@ const registerUser = asyncHandler(async (req, res) => {
     // const hashedPassword = await bcrypt.hash(password, salt)
   
     // Create user
-    const user = await User.create({
-        userName,
-      email,
-      password,
-    })
-  
+    const user = await User.create(formData)
+    // if(!formData.rights){
+    
+    // }
+  //   else if (formData.rights) {
+  //     const user = await User.create({
+  //       userName,
+  //     email,
+  //     password,
+  //   })
+  // }
     if (user) {
       res.status(201).json({
         _id: user.id,
         name: user.name,
         email: user.email,
-        token: generateToken(user._id),
+        token: await generateToken(user._id,user.rights),
       })
     } else {
       res.status(400)
@@ -63,7 +70,7 @@ const loginUser = asyncHandler(async (req,res) =>{
   const user = await User.findOne({ email })
 
   if (user && password === user.password) {
-    const token = await generateToken(user._id);
+    const token = await generateToken(user._id,user.rights);
     res.header('Access-Control-Allow-Credentials', true);
     res.cookie("token", token, {
         domain: 'localhost',
@@ -78,7 +85,7 @@ const loginUser = asyncHandler(async (req,res) =>{
       _id: user.id,
       name: user.name,
       email: user.email,
-      token: await generateToken(user._id),
+      token: await generateToken(user._id,user.rights),
     })
   } else {
     res.status(400)
@@ -87,8 +94,11 @@ const loginUser = asyncHandler(async (req,res) =>{
 
 })
 
-const generateToken = async (id) => {
-    return jwt.sign({ id }, "123",)
+const generateToken = async (id,rights) => {
+  const stringToken = `${id}/${rights}`
+  console.log(">>>",stringToken)
+    return jwt.sign( {stringToken}, "123",)
+    // return console.log(`${id}/${rights}`)
   }
 
   module.exports = {

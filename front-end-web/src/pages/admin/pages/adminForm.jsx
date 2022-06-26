@@ -2,7 +2,7 @@ import "../css/adminForm.css";
 import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -11,8 +11,12 @@ import axios from "axios";
 import * as constatnt from '../../../constatnt/auth';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useNavigate } from 'react-router-dom';
 
-const ITEM_HEIGHT = 48;
+
+
+function AdminForms() {
+    const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
@@ -41,12 +45,34 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-
-function AdminForms() {
+    let navigate = useNavigate();
+    useEffect(()=>{
+        const res = axios.get(`${constatnt.DB_URL}auth/myRights`,{ withCredentials: true })
+        .then((res)=>{
+            if(res.data === process.env.REACT_APP_CLIENT){
+                console.log(">>>",res)
+                navigate('/deskBoard')
+            }
+            else if(res.data === process.env.REACT_APP_ERROR){
+                navigate('/')
+                console.log(">>>",res)
+            }
+            else{
+                console.log(">>>",res)
+            }
+        })
+        // console.log(process.env.REACT_APP_ADMIN);
+    },[])
 
     const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);
 
+    const [categoryTypeOfElectricProduct, setCategoryTypeOfElectricProduct] = useState([
+        "Mobile",
+        "Laptop",
+        "Accessories"
+    ])
+    // console.log(process.env.REACT_APP_ADMIN);
     const handleChange = (event) => {
         const {
         target: { value },
