@@ -29,11 +29,20 @@ const addElectricProduct = asyncHandler(async (req, res) => {
 
   //Delete Electric Product
 
-  const deleteElectricProduct = (req,res) => {
-    ElectricProduct.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Product Deleted Sucessfully'))
-    .catch(err => res.status(400).json('Error: '+err));
-};
+  const deleteElectricProduct = asyncHandler(async (req,res,next) => {
+    try{
+      await ElectricProduct.findByIdAndDelete(req.params.id)
+      //   .then(() => {res.json('Product Deleted Sucessfully')
+      // })
+      //   .catch(err => res.status(400).json('Error: '+err));
+    
+        next()
+    }
+    catch(error){
+      throw new Error('Unsuccessfull')
+    }
+   
+});
 
   const getElectricProduct = asyncHandler(async (req,res) =>{
     const data =await ElectricProduct.find()

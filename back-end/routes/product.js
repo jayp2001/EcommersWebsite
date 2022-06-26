@@ -8,7 +8,7 @@ const  {addFashionProduct, getFashionProduct, deleteFashionProduct} = require('.
 //Electric Product
 router.post('/addElectricProduct', addElectricProduct);
 router.get('/getElectricProduct',getElectricProduct);
-router.delete('/deleteElectricProduct/:id',deleteElectricProduct);
+router.delete('/deleteElectricProduct/:id',deleteElectricProduct,getElectricProduct);
 
 
 //Fashion Product

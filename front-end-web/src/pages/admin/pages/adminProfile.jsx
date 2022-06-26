@@ -19,13 +19,27 @@ function AdminProfile(){
     useEffect(()=>{
         const res = axios.get(`${constatnt.DB_URL}product/getElectricProduct`)
         .then(res=> setProductList(res.data))
-        console.log(res)
+        
         // if(res.data)
             // setProductList(res.data)
     },[setProductList])
     if(!productList){
         return null
     }
+
+    // function deleteData(()=>{
+    //     return null
+    // },[setProductList])
+
+    const deleteData = (e)=>{
+        console.log(productList)
+        // const id = e
+        const res = axios.delete(`${constatnt.DB_URL}product/deleteElectricProduct/${e}`)
+        .then(res=> setProductList(res.data))
+        console.log(productList);
+        
+    }
+
     return(
         <>
         <div className="grid grid-cols-12">
@@ -59,7 +73,7 @@ function AdminProfile(){
                                 <TableCell align="right">{row.quantity}</TableCell>
                                 <TableCell align="right">{row.status}</TableCell>
                                 <TableCell align="right"><button className="Edit"><EditTwoToneIcon/></button></TableCell>
-                                <TableCell align="right"><button className="Delete"><DeleteIcon/></button></TableCell> 
+                                <TableCell align="right"><button className="Delete" onClick={()=>deleteData(row._id)}><DeleteIcon/></button></TableCell> 
                                 </TableRow>
                             ))}
                             </TableBody>
