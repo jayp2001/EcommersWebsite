@@ -32,11 +32,14 @@ function AdminProfile(){
     // },[setProductList])
 
     const deleteData = (e)=>{
-        console.log(productList)
-        // const id = e
-        const res = axios.delete(`${constatnt.DB_URL}product/deleteElectricProduct/${e}`)
-        .then(res=> setProductList(res.data))
-        console.log(productList);
+        if(window.confirm("are you sure? you want to delete this item")){
+               console.log(productList)
+                // const id = e
+                const res = axios.delete(`${constatnt.DB_URL}product/deleteElectricProduct/${e}`)
+                .then(res=> setProductList(res.data))
+                console.log(productList);
+        }
+     
         
     }
 
