@@ -50,6 +50,12 @@ const addElectricProduct = asyncHandler(async (req, res) => {
     // .then(electricProduct => res.json(electricProduct))
     // .catch(err => res.status(400).json('Error: ' + err));
   })
+  const getElectricProductById = asyncHandler(async (req,res) =>{
+    const data =await ElectricProduct.findById(req.params.id)
+    res.status(200).json(data);
+    // .then(electricProduct => res.json(electricProduct))
+    // .catch(err => res.status(400).json('Error: ' + err));
+  })
  
   //UPDATE Electric Product
 
@@ -75,5 +81,5 @@ const addElectricProduct = asyncHandler(async (req, res) => {
 
 
   module.exports = {
-    addElectricProduct,getElectricProduct,deleteElectricProduct,updateElectricProduct
+    addElectricProduct,getElectricProduct,deleteElectricProduct,updateElectricProduct,getElectricProductById
   }

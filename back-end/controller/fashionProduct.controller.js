@@ -52,6 +52,13 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
     // .catch(err => res.status(400).json('Error: ' + err));
   })
 
+  const getFashionProductById = asyncHandler(async (req,res) =>{
+    const data =await FashionProduct.findById(req.params.id)
+    res.status(200).json(data);
+    // .then(electricProduct => res.json(electricProduct))
+    // .catch(err => res.status(400).json('Error: ' + err));
+  })
+
     //UPDATE Fashion Product
 
     const  updateFashionProduct = asyncHandler(async(req,res)=>{
@@ -74,5 +81,5 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
       })
  
   module.exports = {
-    addFashionProduct,getFashionProduct,deleteFashionProduct,updateFashionProduct
+    addFashionProduct,getFashionProduct,deleteFashionProduct,updateFashionProduct,getFashionProductById
   }

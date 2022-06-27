@@ -1,7 +1,11 @@
 import './css/productDetail.css';
 import img from '../assets/ecommerce.svg'
 import TextField from '@mui/material/TextField';
+import {useParams} from "react-router-dom";
+import React from 'react';
 function ProductDetail(){
+    const param = useParams();
+    console.log(">>>>",param);
     return(
         <>
         <div className="grid grid-cols-12 gap-12 mt-20 pb-10">

@@ -26,6 +26,7 @@ function App() {
         <Route path='/product/:id' element={<ProductDetail />} />
         <Route path='/products' element={<ProductList />} />
         <Route path='/admin/addProduct' element={<AdminForms />} />
+        <Route path='/admin/editProduct/:id/:type' element={<AdminForms />} />
         <Route path='/admin/adminProfile' element={<AdminProfile />} />
         <Route path='/cart' element={<AddCart/>} />
         {/* <Route path='/users' exact element={<UserList />} />
