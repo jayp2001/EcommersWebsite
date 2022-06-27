@@ -18,7 +18,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const formData = req.body
     // const { userName, email, password } = req.body
   
-    if (!formData.userName || !formData.email || !formData.password) {
+    if (!formData.userName || !formData.email || !formData.password || !formData.address) {
       res.status(400)
       throw new Error('Please add all fields')
     }
