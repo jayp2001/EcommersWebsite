@@ -18,7 +18,6 @@ const { json } = require('express');
 
 const addElectricProduct = asyncHandler(async(req, res) => {
     const {name ,brandName ,feature ,discription ,status ,type ,price ,quantity} = req.body
-    const {productImage} = req.file.originalname
   
     if (!name || !brandName || !feature || !discription || !status || !type || !price || !quantity) {
       res.status(400)
