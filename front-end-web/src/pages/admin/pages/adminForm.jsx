@@ -15,7 +15,7 @@ import { useNavigate, useParams} from 'react-router-dom';
 
 function AdminForms() {
 
-    const [category,setCategory] = useState("Fashion");
+    const [category,setCategory] = useState("Electric");
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -57,12 +57,15 @@ const getDataById= async()=>{
         // navigate('/admin/adminProfile')
     }
     else if(param && param.match(/^[0-9a-fA-F]{24}$/)){
-        // if(type){
-        //     setCategory(param.type)
-        // }
-        
+        if(type){
+            console.log(type)
+            setCategory(type)
+        }
+        // console.log(">>>",type)
         const data =await axios.get(`${constatnt.DB_URL}product/getFashionProduct/${param}`)
         .then((res)=>setFormdata(res.data))
+
+        
     }
 }
 const [categoryTypeOfFashionProduct, setCategoryTypeOfFashionProduct] = useState([
@@ -144,41 +147,80 @@ function getStyles(name, personName, theme) {
     const submitAddProduct = async (e)=>{
        
         e.preventDefault();
-        if(category === "Electric"){
-            const electicProduct = {
-                name : formdata.name,
-                brandName : formdata.brandName,
-                feature : formdata.feature,
-                discription : formdata.discription,
-                status : formdata.status,
-                type : formdata.type,
-                price : formdata.price,
-                quantity : formdata.quantity,
+
+        if(window.location.pathname.split('/')[2] === "editProduct"){
+            if(category === "Electric"){
+                const electicProduct = {
+                    name : formdata.name,
+                    brandName : formdata.brandName,
+                    feature : formdata.feature,
+                    discription : formdata.discription,
+                    status : formdata.status,
+                    type : formdata.type,
+                    price : formdata.price,
+                    quantity : formdata.quantity,
+                }
+                console.log(">>>>>",formdata)
+                const res = await axios.post(`${constatnt.DB_URL}product/updateElectricProduct/${param}`, electicProduct)
+                .then(()=>navigate('/admin/adminProfile'))
             }
-            console.log(">>>>>",formdata)
-            const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, electicProduct);
+            else{
+                const fashionProduct = {
+                    name : formdata.name,
+                    brandName : formdata.brandName,
+                    discription : formdata.discription,
+                    status : formdata.status,
+                    type : formdata.type,
+                    price : formdata.price,
+                    quantity : formdata.quantity,
+                    size:formdata.size
+                }
+                console.log(">>>>>",formdata)
+                const res = await axios.post(`${constatnt.DB_URL}product/updateFashionProduct/${param}`, fashionProduct)
+                .then(()=>navigate('/admin/adminProfile'))
+            }
         }
         else{
-            const fashionProduct = {
-                name : formdata.name,
-                brandName : formdata.brandName,
-                discription : formdata.discription,
-                status : formdata.status,
-                type : formdata.type,
-                price : formdata.price,
-                quantity : formdata.quantity,
-                size:formdata.size
+            if(category === "Electric"){
+                const electicProduct = {
+                    name : formdata.name,
+                    brandName : formdata.brandName,
+                    feature : formdata.feature,
+                    discription : formdata.discription,
+                    status : formdata.status,
+                    type : formdata.type,
+                    price : formdata.price,
+                    quantity : formdata.quantity,
+                }
+                console.log(">>>>>",formdata)
+                const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, electicProduct)
+                .then(()=>navigate('/admin/adminProfile'))
             }
-            console.log(">>>>>",formdata)
-            const res = await axios.post(`${constatnt.DB_URL}product/addFashionProduct`, fashionProduct);
+            else{
+                const fashionProduct = {
+                    name : formdata.name,
+                    brandName : formdata.brandName,
+                    discription : formdata.discription,
+                    status : formdata.status,
+                    type : formdata.type,
+                    price : formdata.price,
+                    quantity : formdata.quantity,
+                    size:formdata.size
+                }
+                console.log(">>>>>",formdata)
+                const res = await axios.post(`${constatnt.DB_URL}product/addFashionProduct`, fashionProduct)
+                .then(()=>navigate('/admin/adminProfile'))
+            }
         }
+
+ 
 
     }
 
 
 
     
-
+    console.log("<<>>",formdata,category,window.location.pathname.split('/')[2])
 
     return(
         <>
@@ -261,29 +303,7 @@ function getStyles(name, personName, theme) {
                                     </div>
                                 </div>
                             </div>
-                             <div className="grid grid-cols-12">
-                             <div className="col-start-3 col-span-8">
-                                  <div className="Nop">
-                                     <FormControl sx={{ m: 1, minWidth: 625 }}>
-                                         <InputLabel id="demo-controlled-open-select-label">Fashion Category</InputLabel>
-                                         <Select 
-                                         labelId="demo-controlled-open-select-label"
-                                         id="demo-controlled-open-select"
-                                         label="Fashion Category"
-                                         value={formdata.fashionCategory}
-                                         name="fashionCategory"
-                                         onChange={onchange}
-                                         >
-                                         <MenuItem value="">
-                                             <em>None</em>
-                                         </MenuItem>
-                                         <MenuItem value="Men's Wear">Men's Wear</MenuItem>
-                                         <MenuItem value="Women's Wear">Women's Wear</MenuItem>
-                                         </Select>
-                                     </FormControl>
-                                 </div>
-                             </div>
-                         </div>
+                         
                          </>
                             :
                             null 
@@ -385,9 +405,9 @@ function getStyles(name, personName, theme) {
                                         <MenuItem value="">
                                             <em>None</em>
                                         </MenuItem>
-                                        <MenuItem value="On Stock">On Stock</MenuItem>
-                                        <MenuItem value="Out Of Stock">Out Of Stock</MenuItem>
-                                        <MenuItem value="Empty">Empty</MenuItem>
+                                        <MenuItem value={'on stock'}>On Stock</MenuItem>
+                                        <MenuItem value="out of stock">Out Of Stock</MenuItem>
+                                        <MenuItem value="empty">Empty</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
