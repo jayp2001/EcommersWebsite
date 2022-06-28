@@ -60,10 +60,18 @@ const getDataById= async()=>{
         if(type){
             console.log(type)
             setCategory(type)
+            if(type === "Fashion"){
+                const data =await axios.get(`${constatnt.DB_URL}product/getFashionProduct/${param}`)
+                .then((res)=>setFormdata(res.data))
+            }
+            else{
+                const data =await axios.get(`${constatnt.DB_URL}product/getElectricProduct/${param}`)
+                .then((res)=>setFormdata(res.data))
+            }
         }
         // console.log(">>>",type)
-        const data =await axios.get(`${constatnt.DB_URL}product/getFashionProduct/${param}`)
-        .then((res)=>setFormdata(res.data))
+        // const data =await axios.get(`${constatnt.DB_URL}product/getFashionProduct/${param}`)
+        // .then((res)=>setFormdata(res.data))
 
         
     }
@@ -74,9 +82,10 @@ const [categoryTypeOfFashionProduct, setCategoryTypeOfFashionProduct] = useState
 ])
 
 function getStyles(name, personName, theme) {
+    console.log("<><><><><><>",name)
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      personName.indexOf(name ? name : '') === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -361,7 +370,7 @@ function getStyles(name, personName, theme) {
                                              <MenuItem
                                              key={name}
                                              value={name}
-                                             style={getStyles(name, formdata.size, theme)}
+                                             style={getStyles(name, formdata.type, theme)}
                                              >
                                              {name}
                                              </MenuItem>
@@ -370,7 +379,7 @@ function getStyles(name, personName, theme) {
                                              <MenuItem
                                              key={name}
                                              value={name}
-                                             style={getStyles(name, formdata.size, theme)}
+                                             style={getStyles(name, formdata.type, theme)}
                                              >
                                              {name}
                                              </MenuItem>
@@ -405,7 +414,7 @@ function getStyles(name, personName, theme) {
                                         <MenuItem value="">
                                             <em>None</em>
                                         </MenuItem>
-                                        <MenuItem value={'on stock'}>On Stock</MenuItem>
+                                        <MenuItem value='on stock'>On Stock</MenuItem>
                                         <MenuItem value="out of stock">Out Of Stock</MenuItem>
                                         <MenuItem value="empty">Empty</MenuItem>
                                         </Select>

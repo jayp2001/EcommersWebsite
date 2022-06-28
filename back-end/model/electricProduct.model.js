@@ -43,10 +43,10 @@ const electricProductSchema = new Schema({
         required : true,
         type : Number,
     },
-    productImage : {
-        required : true,
-        type : String,
-    }
+    // productImage : {
+    //     required : true,
+    //     type : String,
+    // }
     },
 {
     timestamps: true,
