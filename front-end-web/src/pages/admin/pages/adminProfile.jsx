@@ -18,10 +18,11 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { TextField } from "@mui/material";
+import {useNavigate} from 'react-router-dom'
 
 
 function AdminProfile(){
-
+    let navigate = useNavigate();
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
@@ -68,6 +69,14 @@ function AdminProfile(){
        }
     }
 
+    const editFashion = (id) =>{
+        navigate(`/admin/editProduct/${id}/Fashion`)
+    }
+
+    const editElectric = (id) =>{
+        navigate(`/admin/editProduct/${id}/Electric`)
+    }
+
     return(
         <>
         <div className="grid grid-cols-12">
@@ -93,7 +102,7 @@ function AdminProfile(){
                         />
                             <button className="Button ml-6 btnSearch">Search</button>
                         </div>
-                    <button className="btnAddProduct">Add Products</button>
+                    <button className="btnAddProduct" onClick={()=> navigate('/admin/addProduct')}>Add Products</button>
                     </div>
                  </Box>
         <TabPanel value="1">
@@ -123,7 +132,7 @@ function AdminProfile(){
                                 <TableCell align="right">{row.price}</TableCell>
                                 <TableCell align="right">{row.quantity}</TableCell>
                                 <TableCell align="right">{row.status}</TableCell>
-                                <TableCell align="right"><button className="Edit"><EditTwoToneIcon/></button></TableCell>
+                                <TableCell align="right"><button className="Edit" onClick={()=>editElectric(row._id)}><EditTwoToneIcon/></button></TableCell>
                                 <TableCell align="right"><button className="Delete" onClick={()=>deleteData(row._id)}><DeleteIcon/></button></TableCell> 
                                 </TableRow>
                             ))}
@@ -158,7 +167,7 @@ function AdminProfile(){
                                 <TableCell align="right">{row.price}</TableCell>
                                 <TableCell align="right">{row.quantity}</TableCell>
                                 <TableCell align="right">{row.status}</TableCell>
-                                <TableCell align="right"><button className="Edit"><EditTwoToneIcon/></button></TableCell>
+                                <TableCell align="right"><button className="Edit" onClick={()=>editFashion(row._id)}><EditTwoToneIcon/></button></TableCell>
                                 <TableCell align="right"><button className="Delete" onClick={()=>deleteFashionProduct(row._id)}><DeleteIcon/></button></TableCell> 
                                 </TableRow>
                             ))}
