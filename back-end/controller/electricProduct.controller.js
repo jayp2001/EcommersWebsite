@@ -1,9 +1,24 @@
 let ElectricProduct = require('../model/electricProduct.model');
 const asyncHandler = require('express-async-handler');
 const { json } = require('express');
+// const multer = require('multer');
 
-const addElectricProduct = asyncHandler(async (req, res) => {
-    const {name ,brandName ,feature ,discription ,status ,type ,price ,quantity } = req.body
+
+
+// const storage = multer.diskStorage({
+//   destination: (req, file ,callback) =>{
+//      callback(null, "../../uploads/");
+//   },
+//   filename: (req, file ,callback) =>{
+//     callback(null, file.originalname);
+//   }
+// })
+
+//  const upload = multer({storage: storage});
+
+const addElectricProduct = asyncHandler(async(req, res) => {
+    const {name ,brandName ,feature ,discription ,status ,type ,price ,quantity} = req.body
+    const {productImage} = req.file.originalname
   
     if (!name || !brandName || !feature || !discription || !status || !type || !price || !quantity) {
       res.status(400)
@@ -12,7 +27,7 @@ const addElectricProduct = asyncHandler(async (req, res) => {
   
     // Create user
     const electricProduct = await ElectricProduct.create({
-        name ,brandName ,feature ,discription ,status ,type ,price ,quantity
+      name ,brandName ,feature ,discription ,status ,type ,price ,quantity 
     })
   
     if (electricProduct) {

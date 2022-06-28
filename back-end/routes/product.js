@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router();
+const { json } = require('express');
+// const multer = require('multer');
 let ElectricProduct = require('../model/electricProduct.model');
 
 const {addElectricProduct, getElectricProduct, deleteElectricProduct, updateElectricProduct,getElectricProductById} = require('../controller/electricProduct.controller');
@@ -20,5 +22,26 @@ router.get('/getFashionProduct/:id',getFashionProductById);
 router.delete('/deleteFashionProduct/:id',deleteFashionProduct,getFashionProduct);
 router.post('/updateFashionProduct/:id',updateFashionProduct);
 
+// const storage = multer.diskStorage({
+//     destination: (req, file ,callback) =>{
+//        callback(null, "https://drive.google.com/drive/folders/1Y3Ak5BG_FgoSwP9tuLjI3Tjq4HRpMYWL");
+//     },
+//     filename: (req, file ,callback) =>{
+//       callback(null, file.originalname);
+//     }
+//   })
+  
+//    const upload = multer({storage: storage});
+
+// router.post('/image',upload.single('productImage'),(req,res) =>{
+//     const newArticle = new ElectricProduct({
+//         productImage: req.file.originalname
+//     });
+
+//     newArticle
+//         .save()
+//         .then(() =>res.json("new article posted"));
+//         // .catch((err) => res.status(400).json(`error : ${err}`));
+// });
 
 module.exports = router;

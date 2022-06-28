@@ -2,6 +2,7 @@ let User = require('../model/user.model');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
+var nodemailer = require('nodemailer');
 
 const getUser =(req,res)=>{
 
@@ -101,7 +102,46 @@ const generateToken = async (id,rights) => {
     // return console.log(`${id}/${rights}`)
   }
 
+  const forgetPwd = asyncHandler(async (req,res)=>{
+
+    const {email} = req.body;
+
+    if(email){
+
+      const user = await User.findOne({ email })
+
+      if(user){
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'hotel.reviev@gmail.com',
+            pass: 'brfxdprrxizabanm'
+          }
+        });
+        
+        var mailOptions = {
+          from: 'hotel.reviev@gmail.com',
+          to:'parmarjay1222@gmail.com',
+          // to: `${email}`,
+          subject: 'your password',
+          text: `${user.password}`
+        };
+        
+        await transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            res.status(200).json("done")
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      }
+    }
+
+    
+  })
+
   module.exports = {
     loginUser,
-    registerUser,getUser
+    registerUser,getUser,forgetPwd
   }

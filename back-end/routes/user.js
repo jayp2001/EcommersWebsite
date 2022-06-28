@@ -2,13 +2,14 @@ const express = require('express')
 const router = express.Router();
 let user = require('../model/user.model');
 
-const {loginUser,registerUser,getUser} = require('../controller/userController')
+const {loginUser,registerUser,getUser, forgetPwd} = require('../controller/userController')
 
 const {protect} = require('../middleware/authMiddleWare')
 
 router.post('/',loginUser);
 router.get('/get',protect,getUser);
-router.post('/register', registerUser)
+router.post('/register', registerUser);
+router.post('/forgetPwd',forgetPwd);
 
 // router.route('/').get((req,res) => {
 //     user.find()
