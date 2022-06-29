@@ -16,6 +16,7 @@ import { useNavigate, useParams} from 'react-router-dom';
 function AdminForms() {
 
     const [category,setCategory] = useState("Electric");
+    const [previewImg,setPreviewImg] = useState();
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -190,19 +191,23 @@ function getStyles(name, personName, theme) {
             }
         }
         else{
+            let payloadData = new FormData();
+            
             if(category === "Electric"){
-                const electicProduct = {
-                    name : formdata.name,
-                    brandName : formdata.brandName,
-                    feature : formdata.feature,
-                    discription : formdata.discription,
-                    status : formdata.status,
-                    type : formdata.type,
-                    price : formdata.price,
-                    quantity : formdata.quantity,
-                }
+                Object.keys(formdata).forEach(key => payloadData.append(key, formdata[key]));
+                // const electicProduct = {
+                //     name : formdata.name,
+                //     brandName : formdata.brandName,
+                //     feature : formdata.feature,
+                //     discription : formdata.discription,
+                //     status : formdata.status,
+                //     type : formdata.type,
+                //     price : formdata.price,
+                //     quantity : formdata.quantity,
+                //     file:formdata.file
+                // }
                 console.log(">>>>>",formdata)
-                const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, electicProduct)
+                const res = await axios.post(`${constatnt.DB_URL}product/addElectricProduct`, payloadData)
                 .then(()=>navigate('/admin/adminProfile'))
             }
             else{
@@ -224,6 +229,14 @@ function getStyles(name, personName, theme) {
 
  
 
+    }
+
+    const handleFileUpload = (e)=>{
+        setFormdata((prevState) => ({
+            ...prevState,
+          file: e.target.files[0],
+        }))
+        setPreviewImg(URL.createObjectURL(e.target.files[0]));
     }
 
 
@@ -391,13 +404,13 @@ function getStyles(name, personName, theme) {
                             </div>
                         </div>
                        
-                        {/* <div className="grid grid-cols-12">
+                        <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                 <input type="file" value={newData.fupload} />
+                                 <input type="file" onChange={handleFileUpload} />
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                          <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
@@ -430,6 +443,9 @@ function getStyles(name, personName, theme) {
                                  <Button variant="contained" color="info">RESET</Button>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <img src={previewImg} style={{height:"200px",width:"300px"}} />
                         </div>
                     </div>
                 </div>

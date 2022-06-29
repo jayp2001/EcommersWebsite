@@ -9,6 +9,7 @@ import Nevbar from './navBar/navBar';
 import AdminForms from './pages/admin/pages/adminForm';
 import AdminProfile from './pages/admin/pages/adminProfile';
 import AddCart from './pages/Cart/cart';
+import GoogleDrive from './driveUpload';
 import './App.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path='/admin/editProduct/:id/:type' element={<AdminForms />} />
         <Route path='/admin/adminProfile' element={<AdminProfile />} />
         <Route path='/cart' element={<AddCart/>} />
+        <Route path='/drive' element={<GoogleDrive />} />
         {/* <Route path='/users' exact element={<UserList />} />
         <Route path='/edit/:id' exact element={<EditExercise />} />
         <Route path='/create' exact element={<AddExercise />} />

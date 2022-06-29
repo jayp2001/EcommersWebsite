@@ -1,43 +1,53 @@
 let ElectricProduct = require('../model/electricProduct.model');
 const asyncHandler = require('express-async-handler');
 const { json } = require('express');
-// const multer = require('multer');
+const fs = require('fs')
+var {google} = require('googleapis');
+const Multer = require('multer');
 
+const authenticateGoogle = () => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: `/Users/vikalp/Ecommerce/EcommersWebsite/back-end/service-account.json`,
+    scopes: "https://www.googleapis.com/auth/drive",
+  });
+  return auth;
+};
 
+ const multer = Multer({
+  storage: Multer.diskStorage({
+    destination: function (req, file, callback) {
+      callback(null, `/Users/vikalp/Ecommerce/EcommersWebsite/uploads`);
+    },
+    filename: function (req, file, callback) {
+      callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+    },
+  }),
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
 
-// const storage = multer.diskStorage({
-//   destination: (req, file ,callback) =>{
-//      callback(null, "../../uploads/");
-//   },
-//   filename: (req, file ,callback) =>{
-//     callback(null, file.originalname);
-//   }
-// })
+const uploadToGoogleDrive = async (file, auth) => {
+  const fileMetadata = {
+    name: file.originalname,
+    parents: ["1jYhlqJGrNVDL-6Ku2xmJwb4P7-NhaxFr"], // Change it according to your desired parent folder id
+  };
 
-//  const upload = multer({storage: storage});
+  const media = {
+    mimeType: file.mimetype,
+    body: fs.createReadStream(file.path),
+  };
 
-const addElectricProduct = asyncHandler(async(req, res) => {
-    const {name ,brandName ,feature ,discription ,status ,type ,price ,quantity} = req.body
-  
-    if (!name || !brandName || !feature || !discription || !status || !type || !price || !quantity) {
-      res.status(400)
-      throw new Error('Please add all fields')
-    }
-  
-    // Create user
-    const electricProduct = await ElectricProduct.create({
-      name ,brandName ,feature ,discription ,status ,type ,price ,quantity 
-    })
-  
-    if (electricProduct) {
-      res.status(201).json({
-        _id: electricProduct._id,
-      })
-    } else {
-      res.status(400)
-      throw new Error('Unsuccessfull')
-    }
-  })
+  const driveService = google.drive({ version: "v3", auth });
+
+  const response = await driveService.files.create({
+    requestBody: fileMetadata,
+    media: media,
+    fields: "id",
+  });
+  return response;
+};
+
 
   //Delete Electric Product
 
@@ -95,5 +105,5 @@ const addElectricProduct = asyncHandler(async(req, res) => {
 
 
   module.exports = {
-    addElectricProduct,getElectricProduct,deleteElectricProduct,updateElectricProduct,getElectricProductById
+    getElectricProduct,deleteElectricProduct,updateElectricProduct,getElectricProductById
   }

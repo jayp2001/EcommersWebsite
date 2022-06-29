@@ -43,11 +43,16 @@ const electricProductSchema = new Schema({
         required : true,
         type : Number,
     },
-    // productImage : {
-    //     required : true,
-    //     type : String,
-    // }
-    },
+    productImage : {
+        URL:{
+            type: String,
+        },
+        id:{
+            type: String,
+            required : true,
+        }
+    }
+},
 {
     timestamps: true,
 });
