@@ -13,12 +13,12 @@ function ProductCard({data,key}){
                 <img src={productData.productImage.URL} />
             </div>
             <div className='product-discription'>
-                <div className='px-6 py-10 flex justify-between'>
+                <div className='px-6 py-10'>
                     <div className='product-name'>
                         {productData.name}
                     </div>
                     <div className='product-rate'>
-                        {productData.price}
+                       <span>₹</span> {productData.price}
                     </div>
                 </div>
             </div>
