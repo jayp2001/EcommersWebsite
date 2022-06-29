@@ -249,7 +249,7 @@ function getStyles(name, personName, theme) {
         <>
             <div className="grid grid-cols-12">
                 <div className="col-start-3 col-span-8 firest">
-                        <div className="Hname">Add Product</div>
+                        <div className="Hname">{param ? "Edit Product" :"Add Product"}</div>
                 </div>
             </div>
             <div className="grid grid-cols-12">
