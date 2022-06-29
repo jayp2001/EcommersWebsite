@@ -39,6 +39,15 @@ const fashionProductSchema = new Schema({
         required : true,
         type : Number,
     },
+    productImage : {
+        URL:{
+            type: String,
+        },
+        id:{
+            type: String,
+            required : true,
+        }
+    }
     },
 {
     timestamps: true,

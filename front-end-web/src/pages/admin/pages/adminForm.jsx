@@ -211,18 +211,19 @@ function getStyles(name, personName, theme) {
                 .then(()=>navigate('/admin/adminProfile'))
             }
             else{
-                const fashionProduct = {
-                    name : formdata.name,
-                    brandName : formdata.brandName,
-                    discription : formdata.discription,
-                    status : formdata.status,
-                    type : formdata.type,
-                    price : formdata.price,
-                    quantity : formdata.quantity,
-                    size:formdata.size
-                }
+                Object.keys(formdata).forEach(key => payloadData.append(key, formdata[key]));
+                // const fashionProduct = {
+                //     name : formdata.name,
+                //     brandName : formdata.brandName,
+                //     discription : formdata.discription,
+                //     status : formdata.status,
+                //     type : formdata.type,
+                //     price : formdata.price,
+                //     quantity : formdata.quantity,
+                //     size:formdata.size
+                // }
                 console.log(">>>>>",formdata)
-                const res = await axios.post(`${constatnt.DB_URL}product/addFashionProduct`, fashionProduct)
+                const res = await axios.post(`${constatnt.DB_URL}product/addFashionProduct`, payloadData)
                 .then(()=>navigate('/admin/adminProfile'))
             }
         }

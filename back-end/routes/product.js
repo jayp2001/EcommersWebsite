@@ -4,10 +4,11 @@ const { json } = require('express');
 const Multer = require('multer');
 var {google} = require('googleapis');
 let ElectricProduct = require('../model/electricProduct.model');
+let FashionProduct = require('../model/fashionProduct.model');
 const asyncHandler = require('express-async-handler');
 const fs = require('fs')
 
-const {addElectricProduct, getElectricProduct, deleteElectricProduct, updateElectricProduct,getElectricProductById} = require('../controller/electricProduct.controller');
+const { getElectricProduct, deleteElectricProduct, updateElectricProduct,getElectricProductById} = require('../controller/electricProduct.controller');
 const  {addFashionProduct, getFashionProduct, deleteFashionProduct, updateFashionProduct ,getFashionProductById} = require('../controller/fashionProduct.controller');
 
 //Electric Product
@@ -19,12 +20,14 @@ router.post('/updateElectricProduct/:id',updateElectricProduct);
 
 
 //Fashion Product
-router.post('/addFashionProduct',addFashionProduct);
+// router.post('/addFashionProduct',addFashionProduct);
 router.get('/getFashionProduct',getFashionProduct);
 router.get('/getFashionProduct/:id',getFashionProductById);
 router.delete('/deleteFashionProduct/:id',deleteFashionProduct,getFashionProduct);
 router.post('/updateFashionProduct/:id',updateFashionProduct);
 
+
+//Electric Product Add With Image in Google Drive
 
 const authenticateGoogle = () => {
   const auth = new google.auth.GoogleAuth({
@@ -118,6 +121,79 @@ const authenticateGoogle = () => {
     }
     
     });
+
+    //Fsshion Product Add With Image in Google Drive
+  
+  
+      const uploadToGoogleDriveFashion = async (file, auth) => {
+          const fileMetadata = {
+            name: file.originalname,
+            parents: ["13qALtoo7I8_-I-4PJBq_V0IkYDRxuKnm"], // Change it according to your desired parent folder id
+          };
+        
+          const media = {
+            mimeType: file.mimetype,
+            body: fs.createReadStream(file.path),
+          };
+        
+          const driveService = google.drive({ version: "v3", auth });
+        
+          const response = await driveService.files.create({
+            requestBody: fileMetadata,
+            media: media,
+            fields: "id",
+          });
+          return response;
+        };
+
+        router.post("/addFashionProduct", multer.single("file"), async (req, res, next) => {
+          const {name ,brandName ,discription ,size ,status ,type ,price ,quantity} = req.body
+    
+      if (!name || !brandName || !discription || !size || !status || !type || !price || !quantity) {
+        res.status(400)
+        throw new Error('Please add all fields')
+      }
+            let driveId;
+          let driveImgUrl;
+          try {
+            if (!req.file) {
+              res.status(400).send("No file uploaded.");
+              return;
+            }
+          
+          const auth = authenticateGoogle();
+          const response = await uploadToGoogleDriveFashion(req.file, auth);
+          driveId = response.data.id;
+          driveImgUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
+          //   deleteFile(req.file.path);
+          //   res.status(200).json( response.data.id );
+  
+          } catch (err) {
+            console.log(err);
+        }
+      // Create user
+      const productImage = {
+          URL: driveImgUrl,
+          id: driveId
+      }
+      console.log(productImage)
+      // const electricProduct = await ElectricProduct.create({productImage})
+  
+      const fashionProduct = await FashionProduct.create({
+        name ,brandName ,discription ,size ,status ,type ,price ,quantity,productImage
+        })
+    
+      if (fashionProduct) {
+        res.status(201).json({
+          _id: fashionProduct._id,
+          url:fashionProduct.productImage.URL
+        })
+      } else {
+        res.status(400)
+        throw new Error('Unsuccessfull')
+      }
+      
+      });
         
 
 module.exports = router;
