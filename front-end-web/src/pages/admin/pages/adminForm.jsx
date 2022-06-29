@@ -356,7 +356,7 @@ function getStyles(name, personName, theme) {
                         <div className="grid grid-cols-12">
                             <div className="col-start-3 col-span-8">
                                  <div className="Nop">
-                                 <TextField fullWidth label="Price Of Product" name="price" value={formdata.price} onChange={onchange}  id="price" />
+                                 <TextField fullWidth label="Price Of Product" name="price" value={formdata.price} onChange={onchange} type="number"  id="price" />
                                 </div>
                             </div>
                         </div>

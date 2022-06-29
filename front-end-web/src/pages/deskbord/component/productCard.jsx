@@ -1,19 +1,24 @@
 import './css/productCard.css';
 import productImg from '../../assets/ecommerce.svg'
 
-function ProductCard(){
+function ProductCard({data,key}){
+    if(!data){
+        return null;
+    }
+    const productData = data;
+    console.log(">>>>>><<<<<<<<<",productData)
     return(
-        <div className='product-card'>
+        <div className='product-card' key={key}>
             <div className='product-img'>
-                <img src={productImg} />
+                <img src={productData.productImage.URL} />
             </div>
             <div className='product-discription'>
                 <div className='px-6 py-10 flex justify-between'>
                     <div className='product-name'>
-                        Iphone 13
+                        {productData.name}
                     </div>
                     <div className='product-rate'>
-                        $ 1300
+                        {productData.price}
                     </div>
                 </div>
             </div>

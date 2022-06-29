@@ -2,6 +2,7 @@ import './css/productList.css'
 import ProductCard from '../deskbord/component/productCard'
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
+import {useEffect,useState} from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -15,10 +16,26 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+import * as constatnt from '../../constatnt/auth';
 // import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 
 function ProductList(){
+
+    const [productList,setProductList] = useState();
+    const [personName, setPersonName] = React.useState([]);
+    const theme = useTheme();
+    useEffect(()=>{
+        const res = axios.get(`${constatnt.DB_URL}product/getElectricProduct`)
+        .then(res=> setProductList(res.data))
+        console.log(res);
+    },[setProductList]);
+
+    if(!productList){
+        return null;
+    }
+
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -51,8 +68,8 @@ function ProductList(){
               : theme.typography.fontWeightMedium,
         };
       }
-      const theme = useTheme();
-        const [personName, setPersonName] = React.useState([]);
+      
+        
       
         const handleChange = (event) => {
           const {
@@ -189,6 +206,7 @@ function ProductList(){
                 <div className="grid grid-cols-12">
                         <div className="col-span-11 col-start-1 ml-8">
                             <div className="product-wrapper grid grid-cols-3 gap-6 px-10 pt-6">
+                                {/* <ProductCard />
                                 <ProductCard />
                                 <ProductCard />
                                 <ProductCard />
@@ -205,8 +223,10 @@ function ProductList(){
                                 <ProductCard />
                                 <ProductCard />
                                 <ProductCard />
-                                <ProductCard />
-                                <ProductCard />
+                                <ProductCard /> */}
+                                {productList.map((row,index) =>(
+                                    <ProductCard data={row} key={index}/>
+                                ))}
                             </div>
                         </div>
                     </div>

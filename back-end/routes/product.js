@@ -31,7 +31,7 @@ router.post('/updateFashionProduct/:id',updateFashionProduct);
 
 const authenticateGoogle = () => {
   const auth = new google.auth.GoogleAuth({
-    keyFile: `/Users/vikalp/Ecommerce/EcommersWebsite/back-end/service-account.json`,
+    keyFile: `/Users/jayparmar/e-commers/back-end/service-account.json`,
     scopes: "https://www.googleapis.com/auth/drive",
   });
   return auth;
@@ -40,7 +40,7 @@ const authenticateGoogle = () => {
  const multer = Multer({
   storage: Multer.diskStorage({
     destination: function (req, file, callback) {
-      callback(null, `/Users/vikalp/Ecommerce/EcommersWebsite/uploads`);
+      callback(null, `/Users/jayparmar/e-commers/uploads`);
     },
     filename: function (req, file, callback) {
       callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
