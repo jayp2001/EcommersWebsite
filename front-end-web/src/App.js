@@ -4,7 +4,8 @@ import { BrowserRouter ,Route,Routes } from "react-router-dom";
 import LoginWrapper from './pages/login/loginWrapper';
 import DeskBoard from './pages/deskbord/deskboard';
 import ProductDetail from './pages/productdetail/productDetail';
-import ProductList from './pages/productList/productList';
+import ProductListElectric from './pages/productList/productListElectric';
+import ProductListFashion from './pages/productList/productListFashion';
 import Nevbar from './navBar/navBar';
 import AdminForms from './pages/admin/pages/adminForm';
 import AdminProfile from './pages/admin/pages/adminProfile';
@@ -24,8 +25,9 @@ function App() {
         <Route path='/signUp' element={<LoginWrapper />} />
         <Route path='/resetPwd' element={<LoginWrapper />} />
         <Route path='/deskBoard' element={<DeskBoard />} />
-        <Route path='/product/:id' element={<ProductDetail />} />
-        <Route path='/products' element={<ProductList />} />
+        <Route path='/product/:id/:type' element={<ProductDetail />} />
+        <Route path='/electric' element={<ProductListElectric />} />
+        <Route path='/fashion' element={<ProductListFashion />} />
         <Route path='/admin/addProduct' element={<AdminForms />} />
         <Route path='/admin/editProduct/:id/:type' element={<AdminForms />} />
         <Route path='/admin/adminProfile' element={<AdminProfile />} />

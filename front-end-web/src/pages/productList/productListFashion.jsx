@@ -21,13 +21,13 @@ import * as constatnt from '../../constatnt/auth';
 // import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 
-function ProductList(){
+function ProductListFashion(){
 
     const [productList,setProductList] = useState();
     const [personName, setPersonName] = React.useState([]);
     const theme = useTheme();
     useEffect(()=>{
-        const res = axios.get(`${constatnt.DB_URL}product/getElectricProduct`)
+        const res = axios.get(`${constatnt.DB_URL}product/getFashionProduct`)
         .then(res=> setProductList(res.data))
         console.log(res);
     },[setProductList]);
@@ -225,7 +225,7 @@ function ProductList(){
                                 <ProductCard />
                                 <ProductCard /> */}
                                 {productList.map((row,index) =>(
-                                    <ProductCard data={row} key={index}/>
+                                    <ProductCard data={row} type={"fashion"} index={index}/>
                                 ))}
                             </div>
                         </div>
@@ -236,4 +236,4 @@ function ProductList(){
     )
 }
 
-export default ProductList;
+export default ProductListFashion;

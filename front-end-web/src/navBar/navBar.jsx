@@ -13,10 +13,10 @@ function Nevbar() {
                         <NavLink to="/deskBoard" activeClassName="active" className="Home">Home</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/products" activeClassName="active" className="Electronic">Electronic</NavLink>
+                        <NavLink to="/electric" activeClassName="active" className="Electronic">Electronic</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/products" activeClassName="active" className="Fashion">Fashion</NavLink>
+                        <NavLink to="/fashion" activeClassName="active" className="Fashion">Fashion</NavLink>
                     </div>
                     <div>
                         <NavLink to="/cart" activeClassName="active" className="Cart">Cart</NavLink>
