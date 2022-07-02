@@ -8,22 +8,20 @@ let FashionProduct = require('../model/fashionProduct.model');
 const asyncHandler = require('express-async-handler');
 const fs = require('fs')
 
-const { getElectricProduct, deleteElectricProduct, updateElectricProduct,getElectricProductById} = require('../controller/electricProduct.controller');
-const  {addFashionProduct, getFashionProduct, deleteFashionProduct, updateFashionProduct ,getFashionProductById} = require('../controller/fashionProduct.controller');
+const { getElectricProduct, updateElectricProduct,getElectricProductById,} = require('../controller/electricProduct.controller');
+const  {getFashionProduct, updateFashionProduct ,getFashionProductById} = require('../controller/fashionProduct.controller');
 
 //Electric Product
 
 router.get('/getElectricProduct',getElectricProduct);
 router.get('/getElectricProduct/:id',getElectricProductById);
-router.delete('/deleteElectricProduct/:id',deleteElectricProduct,getElectricProduct);
 router.post('/updateElectricProduct/:id',updateElectricProduct);
 
 
 //Fashion Product
-// router.post('/addFashionProduct',addFashionProduct);
+
 router.get('/getFashionProduct',getFashionProduct);
 router.get('/getFashionProduct/:id',getFashionProductById);
-router.delete('/deleteFashionProduct/:id',deleteFashionProduct,getFashionProduct);
 router.post('/updateFashionProduct/:id',updateFashionProduct);
 
 
@@ -31,7 +29,7 @@ router.post('/updateFashionProduct/:id',updateFashionProduct);
 
 const authenticateGoogle = () => {
   const auth = new google.auth.GoogleAuth({
-    keyFile: `/Users/jayparmar/e-commers/back-end/service-account.json`,
+    keyFile: `/Users/vikalp/Ecommerce/EcommersWebsite/back-end/service-account.json`,
     scopes: "https://www.googleapis.com/auth/drive",
   });
   return auth;
@@ -40,7 +38,7 @@ const authenticateGoogle = () => {
  const multer = Multer({
   storage: Multer.diskStorage({
     destination: function (req, file, callback) {
-      callback(null, `/Users/jayparmar/e-commers/uploads`);
+      callback(null, `/Users/vikalp/Ecommerce/EcommersWebsite/uploads`);
     },
     filename: function (req, file, callback) {
       callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
@@ -194,6 +192,72 @@ const authenticateGoogle = () => {
       }
       
       });
+
+      //Search By Name
+
+      router.get("/SearchField", async (req, res, next)=>{
+     const SearchField = req.query.name;
+    ElectricProduct.find({name: {$regex: SearchField, $options: '$i'},brandName: {$regex: SearchField, $options: '$i'}})
+      .then(data=>{
+        res.send(data);
+      });
+});
+
+//DELETE FILE IN GOOGLE DRIVE
+
+router.delete('/deleteFashionProduct/:id', asyncHandler(async (req,res,next) => {
+    try{
+       const res = await FashionProduct.findByIdAndDelete(req.params.id)
+      //   .then(() => {res.json('Product Deleted Sucessfully')
+      // })
+      //   .catch(err => res.status(400).json('Error: '+err));
+      if(res){
+        console.log(req.body.imgId)
+        const imgRes =  await deleteFile(req.body.imgId)
+            if(imgRes && res)
+            {
+                next()
+            }
+      }
+      
+       
+    }
+    catch(error){
+      throw new Error(error)
+    }
+}),getFashionProduct);
+
+router.delete('/deleteElectricProduct/:id', asyncHandler(async (req,res,next)=>{
+    try{
+        const res = await ElectricProduct.findByIdAndDelete(req.params.id)
+
+        if(res){
+            console.log(req.body.imgId)
+            const imgRes = await deleteFile(req.body.imgId)
+              if(imgRes && res)
+              {
+                next()
+              }
+        }
+    }
+    catch(error){
+        throw new Error(error)
+    }
+}),getElectricProduct);
+
         
+const deleteFile = asyncHandler(async (fileId) =>{
+    const auth = authenticateGoogle();
+    const driveService = google.drive({ version: "v3", auth });
+
+    const response = await driveService.files.delete({
+        fileId : fileId
+      });
+      return response;
+})
+
+
+        
+          
 
 module.exports = router;

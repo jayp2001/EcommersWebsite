@@ -33,7 +33,7 @@ const { use } = require('./routes/user');
 
 app.use('/login',login);
 app.use('/product',product);
-app.use('/auth',auth)
+app.use('/auth',auth);
 // app.use('/product',addFashionProduct);
 
 connection.once('open', () => {

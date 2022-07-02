@@ -50,20 +50,25 @@ function AdminProfile(){
     //     return null
     // },[setElectricproductList])
 
-    const deleteData = (e)=>{
+    const deleteData = (e,imgId)=>{
         if(window.confirm("are you sure? you want to delete this item")){
                console.log(ElectricproductList)
-                // const id = e
-                const res = axios.delete(`${constatnt.DB_URL}product/deleteElectricProduct/${e}`)
+                const data ={
+                    imgId:imgId
+                }
+                const res = axios.delete(`${constatnt.DB_URL}product/deleteElectricProduct/${e}`,{data})
                 .then(res=> setElectricproductList(res.data))
                 console.log(ElectricproductList);
         }    
     }
 
-    const deleteFashionProduct =(e)=>{
+    const deleteFashionProduct =(e,imgId)=>{
         if(window.confirm("are you sure? you want to delete this item")){
             console.log(FashionproductList)
-            const res = axios.delete(`${constatnt.DB_URL}product/deleteFashionProduct/${e}`)
+            const data = {
+                imgId:imgId
+            }
+            const res = axios.delete(`${constatnt.DB_URL}product/deleteFashionProduct/${e}`,{data})
             .then(res=> setFashionproductList(res.data))
             console.log(FashionproductList);
        }
@@ -133,7 +138,7 @@ function AdminProfile(){
                                 <TableCell align="right">{row.quantity}</TableCell>
                                 <TableCell align="right">{row.status}</TableCell>
                                 <TableCell align="right"><button className="Edit" onClick={()=>editElectric(row._id)}><EditTwoToneIcon/></button></TableCell>
-                                <TableCell align="right"><button className="Delete" onClick={()=>deleteData(row._id)}><DeleteIcon/></button></TableCell> 
+                                <TableCell align="right"><button className="Delete" onClick={()=>deleteData(row._id,row.productImage.id)}><DeleteIcon/></button></TableCell> 
                                 </TableRow>
                             ))}
                             </TableBody>
@@ -168,7 +173,7 @@ function AdminProfile(){
                                 <TableCell align="right">{row.quantity}</TableCell>
                                 <TableCell align="right">{row.status}</TableCell>
                                 <TableCell align="right"><button className="Edit" onClick={()=>editFashion(row._id)}><EditTwoToneIcon/></button></TableCell>
-                                <TableCell align="right"><button className="Delete" onClick={()=>deleteFashionProduct(row._id)}><DeleteIcon/></button></TableCell> 
+                                <TableCell align="right"><button className="Delete" onClick={()=>deleteFashionProduct(row._id,row.productImage.id)}><DeleteIcon/></button></TableCell> 
                                 </TableRow>
                             ))}
                             </TableBody>

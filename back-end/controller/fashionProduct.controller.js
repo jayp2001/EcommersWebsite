@@ -29,19 +29,19 @@ const asyncHandler = require('express-async-handler')
 
   //Delete Fashion Product
 
-  const deleteFashionProduct = asyncHandler(async (req,res,next) => {
-    try{
-      await FashionProduct.findByIdAndDelete(req.params.id)
-      //   .then(() => {res.json('Product Deleted Sucessfully')
-      // })
-      //   .catch(err => res.status(400).json('Error: '+err));
+//   const deleteFashionProduct = asyncHandler(async (req,res,next) => {
+//     try{
+//       await FashionProduct.findByIdAndDelete(req.params.id)
+//       //   .then(() => {res.json('Product Deleted Sucessfully')
+//       // })
+//       //   .catch(err => res.status(400).json('Error: '+err));
     
-        next()
-    }
-    catch(error){
-      throw new Error('Unsuccessfull')
-    }
-});
+//         next()
+//     }
+//     catch(error){
+//       throw new Error('Unsuccessfull')
+//     }
+// });
 
     //Get Fashion Product
 
@@ -81,5 +81,5 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
       })
  
   module.exports = {
-    getFashionProduct,deleteFashionProduct,updateFashionProduct,getFashionProductById
+    getFashionProduct,updateFashionProduct,getFashionProductById
   }

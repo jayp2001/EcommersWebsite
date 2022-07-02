@@ -51,20 +51,20 @@ const uploadToGoogleDrive = async (file, auth) => {
 
   //Delete Electric Product
 
-  const deleteElectricProduct = asyncHandler(async (req,res,next) => {
-    try{
-      await ElectricProduct.findByIdAndDelete(req.params.id)
-      //   .then(() => {res.json('Product Deleted Sucessfully')
-      // })
-      //   .catch(err => res.status(400).json('Error: '+err));
+//   const deleteElectricProduct = asyncHandler(async (req,res,next) => {
+//     try{
+//       await ElectricProduct.findByIdAndDelete(req.params.id)
+//       //   .then(() => {res.json('Product Deleted Sucessfully')
+//       // })
+//       //   .catch(err => res.status(400).json('Error: '+err));
     
-        next()
-    }
-    catch(error){
-      throw new Error('Unsuccessfull')
-    }
+//         next()
+//     }
+//     catch(error){
+//       throw new Error('Unsuccessfull')
+//     }
    
-});
+// });
 
   //Get Electric Product
 
@@ -102,8 +102,8 @@ const uploadToGoogleDrive = async (file, auth) => {
     .catch(err => res.status(400).json('Error: '+err));
   })
 
-
+  
 
   module.exports = {
-    getElectricProduct,deleteElectricProduct,updateElectricProduct,getElectricProductById
+    getElectricProduct,updateElectricProduct,getElectricProductById
   }
