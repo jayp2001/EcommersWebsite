@@ -28,12 +28,14 @@ const connection = mongoose.connection;
 const login = require('./routes/user');
 const product = require('./routes/product');
 const auth = require('./routes/auth');
+const cart = require('./routes/cart');
 const { use } = require('./routes/user');
 // const  {addFashionProduct } = require('./controller/fashionProduct.controller');
 
 app.use('/login',login);
 app.use('/product',product);
 app.use('/auth',auth);
+app.use('/cart',cart);
 // app.use('/product',addFashionProduct);
 
 connection.once('open', () => {
