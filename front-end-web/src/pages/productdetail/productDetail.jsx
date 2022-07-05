@@ -73,7 +73,7 @@ function ProductDetail(){
                                     />
                                 </div>
                                 <div className='col-span-6'>
-                                    <div className='flex justify-between'>
+                                    <div className='flex justify-between pt-2 pb-2'>
                                         <div>
                                             <button className='add-btn' onClick={()=>setQuantity(quantity < productData.quantity ? quantity+1 : quantity)}>+</button>
                                         </div>
