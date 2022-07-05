@@ -1,4 +1,3 @@
-import './css/login.css';
 import './css/signUp.css';
 import TextField from '@mui/material/TextField';
 import {useNavigate} from 'react-router-dom';

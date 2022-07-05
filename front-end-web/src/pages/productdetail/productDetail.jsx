@@ -5,13 +5,24 @@ import { useEffect,useState } from 'react';
 import {useParams } from "react-router-dom";
 import * as constatnt from '../../constatnt/auth';
 import axios from 'axios';
+// import Cookies from 'js-cookie';
 
 import React from 'react';
 function ProductDetail(){
+    axios.defaults.withCredentials = true;
     const [productData,setProductData] = useState();
     const [quantity,setQuantity] = useState(1);
     const param = useParams().id;
     const type = useParams().type;
+    const addTocart = async (id)=>{
+        const data = {
+            productId:id,
+            quantity:quantity,
+            type:type
+        }
+        const res = await axios.post(`${constatnt.DB_URL}cart/addCartList/`,data,{withCredentials:true})
+        .then((res)=>console.log(res))
+    }
 
     useEffect(()=>{
         if(type === 'electric' && param){
@@ -81,7 +92,7 @@ function ProductDetail(){
                                             <button className='minus-btn' onClick={()=>setQuantity(quantity > 1 ? quantity-1 : 1)}>-</button>
                                         </div>
                                         <div>
-                                            <button className='add-to-cart-btn'>Add to Cart</button>
+                                            <button className='add-to-cart-btn' onClick={()=>addTocart(productData._id)}>Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>

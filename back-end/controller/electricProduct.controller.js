@@ -1,52 +1,49 @@
 let ElectricProduct = require('../model/electricProduct.model');
 const asyncHandler = require('express-async-handler');
 const { json } = require('express');
-const fs = require('fs')
-var {google} = require('googleapis');
-const Multer = require('multer');
 
-const authenticateGoogle = () => {
-  const auth = new google.auth.GoogleAuth({
-    keyFile: `/Users/vikalp/Ecommerce/EcommersWebsite/back-end/service-account.json`,
-    scopes: "https://www.googleapis.com/auth/drive",
-  });
-  return auth;
-};
+// const authenticateGoogle = () => {
+//   const auth = new google.auth.GoogleAuth({
+//     keyFile: `/Users/vikalp/Ecommerce/EcommersWebsite/back-end/service-account.json`,
+//     scopes: "https://www.googleapis.com/auth/drive",
+//   });
+//   return auth;
+// };
 
- const multer = Multer({
-  storage: Multer.diskStorage({
-    destination: function (req, file, callback) {
-      callback(null, `/Users/vikalp/Ecommerce/EcommersWebsite/uploads`);
-    },
-    filename: function (req, file, callback) {
-      callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-    },
-  }),
-  limits: {
-    fileSize: 5 * 1024 * 1024,
-  },
-});
+//  const multer = Multer({
+//   storage: Multer.diskStorage({
+//     destination: function (req, file, callback) {
+//       callback(null, `/Users/vikalp/Ecommerce/EcommersWebsite/uploads`);
+//     },
+//     filename: function (req, file, callback) {
+//       callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+//     },
+//   }),
+//   limits: {
+//     fileSize: 5 * 1024 * 1024,
+//   },
+// });
 
-const uploadToGoogleDrive = async (file, auth) => {
-  const fileMetadata = {
-    name: file.originalname,
-    parents: ["1jYhlqJGrNVDL-6Ku2xmJwb4P7-NhaxFr"], // Change it according to your desired parent folder id
-  };
+// const uploadToGoogleDrive = async (file, auth) => {
+//   const fileMetadata = {
+//     name: file.originalname,
+//     parents: ["1jYhlqJGrNVDL-6Ku2xmJwb4P7-NhaxFr"], // Change it according to your desired parent folder id
+//   };
 
-  const media = {
-    mimeType: file.mimetype,
-    body: fs.createReadStream(file.path),
-  };
+//   const media = {
+//     mimeType: file.mimetype,
+//     body: fs.createReadStream(file.path),
+//   };
 
-  const driveService = google.drive({ version: "v3", auth });
+//   const driveService = google.drive({ version: "v3", auth });
 
-  const response = await driveService.files.create({
-    requestBody: fileMetadata,
-    media: media,
-    fields: "id",
-  });
-  return response;
-};
+//   const response = await driveService.files.create({
+//     requestBody: fileMetadata,
+//     media: media,
+//     fields: "id",
+//   });
+//   return response;
+// };
 
 
   //Delete Electric Product

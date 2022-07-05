@@ -445,9 +445,9 @@ function getStyles(name, personName, theme) {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <img src={previewImg} style={{height:"200px",width:"300px"}} />
-                        </div>
+                            <div>
+                                <img src={previewImg} style={{height:"200px",width:"300px"}} />
+                            </div>
                     </div>
                 </div>
             </div>
