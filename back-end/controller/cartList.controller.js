@@ -151,6 +151,116 @@ const addCartList = asyncHandler(async (req, res) => {
     }
   })
 
+  //Remove From Cart
+
+  const deleteCart = asyncHandler(async (req,res,next) => {
+    let token;
+    const cookie = req.cookies;
+    if(cookie){
+      try{
+        token = cookie.token;
+        const decoded = jwt.verify(token,process.env.JWT_SECRET)
+        const userId = decoded.stringToken.split('/')[0]
+        const {productId} = req.body
+
+        if (!userId) {
+          res.status(400)
+          throw new Error('UserId Not Found')
+        }
+        await CartList.deleteOne({userId:userId,productId:productId})
+            .then((res) => next())
+            .catch(err => res.status(400).json('Error: '+err));
+        
+      }
+      catch(error){
+        throw new Error('Unsuccessfull')
+      }     
+    }   
+    },getCartList);
+
+    //Edit Cart Quantity
+      //Add Quantity
+    const updateAddQuantity = asyncHandler(async(req,res)=>{
+      let token;
+      const cookie = req.cookies;
+      console.log(req.cookies);
+      try{
+        if(cookie){
+          token = cookie.token
+          const decoded = jwt.verify(token,process.env.JWT_SECRET)
+          const userId = decoded.stringToken.split('/')[0]
+          const {productId} = req.body  
+          var productData = await ElectricProduct.find({_id:productId});
+          if(!productData[0]){
+            productData = await FashionProduct.find({_id:productId});
+          }
+          console.log(productId);
+          const exixstingData = await CartList.find({userId:userId , productId:productId}) 
+            .then(data => {
+              console.log(">>>>>",data);
+              console.log(productData[0].quantity)
+              if (productData[0].quantity <= data[0].quantity){
+                console.log("else")
+                return null;
+              }
+              else if(productData[0].quantity > data[0].quantity){
+                  console.log(">>>>>",data[0].quantity);
+                  const update = {quantity:data[0].quantity + 1};
+                    data[0].updateOne(update)
+                    .then(() => res.json(update.quantity))
+                    .catch(err => res.status(400).json('Error: '+err));
+                }
+                else{
+                  res.status(400).json('Error: max limit reached')
+                }
+            })        
+         }
+       }
+       catch(error){
+        throw new Error(error)
+    }
+    }
+    )
+
+    //Remove Quantity
+
+    const updateRemoveQuantity = asyncHandler(async(req,res)=>{
+      let token;
+      const cookie = req.cookies;
+      console.log(req.cookies);
+      try{
+        if(cookie){
+          token = cookie.token
+          const decoded = jwt.verify(token,process.env.JWT_SECRET)
+          const userId = decoded.stringToken.split('/')[0]
+          const {productId} = req.body  
+          var productData = await ElectricProduct.find({_id:productId});
+          if(!productData[0]){
+            productData = await FashionProduct.find({_id:productId});
+          }
+          const exixstingData = await CartList.find({userId:userId , productId:productId}) 
+            .then(data => {
+              // console.log(">>>>>",data[0]);
+              console.log(productData[0].quantity)
+                    if(data[0].quantity >= 2){
+                      console.log(">>>>>",data);
+                      const update = {quantity:data[0].quantity - 1};
+                        data[0].updateOne(update)
+                        .then(() => res.json(update.quantity))
+                        .catch(err => res.status(400).json('Error: '+err));
+                  }else{
+                    res.status(200).json(1);
+                  }
+            })        
+         }
+       }
+       catch(error){
+        throw new Error(error)
+    }
+    }
+    )
+
+
  module.exports = {
-    addCartList,getCartList
+    addCartList,getCartList,deleteCart,updateAddQuantity,updateRemoveQuantity
  }     

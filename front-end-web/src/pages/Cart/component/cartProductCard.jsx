@@ -1,27 +1,56 @@
 import '../css/cartProductCard.css';
-import productImg from '../../assets/ecommerce.svg'
+import axios from 'axios';
+import * as constatnt from '../../../constatnt/auth';
+import { useState } from 'react';
 
-function CartProductCard({product}){
-    let data = product;
+function CartProductCard({product,removeCart,index}){
+    
+    const [data,setData] = useState(product);
+    
+    console.log(">>>>",product)
     if(!data){
         return null;
     }
+    console.log(">>>>",data)
+
+    const addQuantity = async(productId) =>{
+        const data = {
+            productId:productId
+        }
+        const res = await axios.post(`${constatnt.DB_URL}cart/updateAddquantity`,data,{withCredentials:true})
+        .then((res)=>setData((prevState)=>({
+            ...prevState,
+            quantity:res.data
+        })));
+    }
+    const removeQuantity = async(productId) =>{
+        const data = {
+            productId:productId
+        }
+        const res = await axios.post(`${constatnt.DB_URL}cart/updateRemovequantity`,data,{withCredentials:true})
+        .then((res)=>setData((prevState)=>({
+            ...prevState,
+            quantity:res.data
+        })));
+    }
+    
+    
     return(
         <div className='ProductCard'>
             <div className='product-image'>
-                <img src={productImg} />
+                <img src={data.productImage.URL} />
             </div>
             
             <div className='Product-discription'>
             <div className='Adder flex'>
                 <div>
-                    <button className='btnAdd'>+</button>
+                    <button className='btnAdd' onClick={()=>addQuantity(data._id)}>+</button>
                 </div>
                 <div>
-                    <input type="text" className='AdderText'/>
+                    <input type="text" value={data.quantity} className='AdderText'/>
                 </div>
                 <div>
-                    <button className='btnSub'>-</button>
+                    <button className='btnSub' onClick={()=>removeQuantity(data._id)}>-</button>
                 </div>
             </div>
                 <div className='px-6 py-6 flex justify-between'>
@@ -33,7 +62,7 @@ function CartProductCard({product}){
                     </div>
                 </div>
                 <div className='removeCart flex justify-center'>
-                    <button className='btnCart'>
+                    <button className='btnCart' onClick={()=>removeCart(data._id)}>
                         Remove Item
                     </button>
                 </div>
