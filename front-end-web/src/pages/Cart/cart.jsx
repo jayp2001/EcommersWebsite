@@ -58,10 +58,6 @@ const rows = [
 // const invoiceSubtotal = subtotal(rows);
 const invoiceTaxes = TAX_RATE * subtotal();
 const invoiceTotal = invoiceTaxes + subtotal();
-
-
-
-
    
     const removeCart = (productId)=>{
         if(window.confirm("are you sure? you want to delete this item")){
@@ -69,9 +65,39 @@ const invoiceTotal = invoiceTaxes + subtotal();
                     productId:productId
                 }
                 const res = axios.post(`${constatnt.DB_URL}cart/deleteCart`,data,{withCredentials:true})
-                .then(res=> setCartList(res.data))
+                .then(res=> {setCartList({}); setCartList(res.data)})
+                console.log('>>>',cartList)
         }    
     }
+
+    const addQuantity = async(productId) =>{
+        const data = {
+            productId:productId
+        }
+        const res = await axios.post(`${constatnt.DB_URL}cart/updateAddquantity`,data,{withCredentials:true})
+        .then((res)=>setCartList(res.data));
+    }
+    const removeQuantity = async(productId,quantity) =>{
+        if(quantity === 1){
+            if(window.confirm("are you sure? you want to delete this item")){
+                // const data ={
+                //     productId:productId
+                // }
+                // const res = axios.post(`${constatnt.DB_URL}cart/deleteCart`,data,{withCredentials:true})
+                // .then(res=> setCartList(res.data))
+                // console.log('>>>',cartList)
+            }
+        }
+        else {
+            const data = {
+                productId:productId
+            }
+            const res = await axios.post(`${constatnt.DB_URL}cart/updateRemovequantity`,data,{withCredentials:true})
+            .then((res)=>setCartList(res.data));
+        }
+       
+    }
+   
 
     return(
         <div className="grid grid-cols-12">
@@ -79,7 +105,7 @@ const invoiceTotal = invoiceTaxes + subtotal();
                     <div className="grid grid-cols-12 pl-6 mt-10 gap-8">
                             {cartList.map((row,index)=>(
                                 <div className="col-span-5">
-                                    <CartProductCard product={row} removeCart={removeCart} index={index}/>
+                                    <CartProductCard product={row} quantity={row.quantity} removeCart={removeCart} addQuantity={addQuantity} removeQuantity={removeQuantity} index={index}/>
                                 </div>
                             ))}
                     </div>
@@ -111,7 +137,7 @@ const invoiceTotal = invoiceTaxes + subtotal();
                                             <TableCell>{row.name}</TableCell>
                                             <TableCell align="right">{row.quantity}</TableCell>
                                     
-                                            <TableCell align="center">{ccyFormat(row.price)}</TableCell>
+                                            <TableCell align="center">{ccyFormat(row.price * row.quantity)}</TableCell>
                                             </TableRow>
                                         ))}
 

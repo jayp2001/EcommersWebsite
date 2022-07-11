@@ -119,13 +119,15 @@ const addCartList = asyncHandler(async (req, res) => {
           const ListOfFashionProduct = await FashionProduct.find().where('_id').in(productIdList).exec();
 
           const FinalProductList = ListOfElectricProduct.concat(ListOfFashionProduct);
-    
+          
           data.forEach(cartProduct =>{
             const index = FinalProductList.findIndex(a => a._id.toHexString() === cartProduct.productId.toHexString());
+            
+            console.log("><><><><>",FinalProductList[index])
             FinalProductList[index].quantity = cartProduct.quantity;
             console.log(index);
           }) 
-          console.log(FinalProductList);
+          // console.log(">>>>",FinalProductList);
           // data.forEach(cartProduct =>{
           //   const index = FinalProductList.filter((a,index) => {
           //     if(a._id === cartProduct.productId){
@@ -180,7 +182,7 @@ const addCartList = asyncHandler(async (req, res) => {
 
     //Edit Cart Quantity
       //Add Quantity
-    const updateAddQuantity = asyncHandler(async(req,res)=>{
+    const updateAddQuantity = asyncHandler(async(req,res,next)=>{
       let token;
       const cookie = req.cookies;
       console.log(req.cookies);
@@ -207,7 +209,7 @@ const addCartList = asyncHandler(async (req, res) => {
                   console.log(">>>>>",data[0].quantity);
                   const update = {quantity:data[0].quantity + 1};
                     data[0].updateOne(update)
-                    .then(() => res.json(update.quantity))
+                    .then((res) => next())
                     .catch(err => res.status(400).json('Error: '+err));
                 }
                 else{
@@ -220,11 +222,11 @@ const addCartList = asyncHandler(async (req, res) => {
         throw new Error(error)
     }
     }
-    )
+    ,getCartList)
 
     //Remove Quantity
 
-    const updateRemoveQuantity = asyncHandler(async(req,res)=>{
+    const updateRemoveQuantity = asyncHandler(async(req,res,next)=>{
       let token;
       const cookie = req.cookies;
       console.log(req.cookies);
@@ -246,7 +248,7 @@ const addCartList = asyncHandler(async (req, res) => {
                       console.log(">>>>>",data);
                       const update = {quantity:data[0].quantity - 1};
                         data[0].updateOne(update)
-                        .then(() => res.json(update.quantity))
+                        .then((res) => next())
                         .catch(err => res.status(400).json('Error: '+err));
                   }else{
                     res.status(200).json(1);
@@ -258,7 +260,7 @@ const addCartList = asyncHandler(async (req, res) => {
         throw new Error(error)
     }
     }
-    )
+    ,getCartList)
 
 
  module.exports = {
