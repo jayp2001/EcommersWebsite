@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as constatnt from '../../../constatnt/auth';
 import { useState } from 'react';
 
-function CartProductCard({product,removeCart,quantity,addQuantity,removeQuantity,index}){
+function CartProductCard({product,removeCart,quantity,addQuantity,removeQuantity,productId}){
     
     const [data,setData] = useState(product);
     
@@ -40,7 +40,7 @@ function CartProductCard({product,removeCart,quantity,addQuantity,removeQuantity
                     </div>
                 </div>
                 <div className='removeCart flex justify-center'>
-                    <button className='btnCart' onClick={()=>removeCart(data._id)}>
+                    <button className='btnCart' onClick={()=>removeCart(data._id,productId)}>
                         Remove Item
                     </button>
                 </div>

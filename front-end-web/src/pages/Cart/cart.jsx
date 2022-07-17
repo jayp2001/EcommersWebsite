@@ -80,12 +80,12 @@ const invoiceTotal = invoiceTaxes + subtotal();
     const removeQuantity = async(productId,quantity) =>{
         if(quantity === 1){
             if(window.confirm("are you sure? you want to delete this item")){
-                // const data ={
-                //     productId:productId
-                // }
-                // const res = axios.post(`${constatnt.DB_URL}cart/deleteCart`,data,{withCredentials:true})
-                // .then(res=> setCartList(res.data))
-                // console.log('>>>',cartList)
+                const data ={
+                    productId:productId
+                }
+                const res = axios.post(`${constatnt.DB_URL}cart/deleteCart`,data,{withCredentials:true})
+                .then(res=> setCartList(res.data))
+                console.log('>>>',cartList)
             }
         }
         else {
@@ -103,9 +103,9 @@ const invoiceTotal = invoiceTaxes + subtotal();
         <div className="grid grid-cols-12">
                 <div className="col-start-1 col-span-7">
                     <div className="grid grid-cols-12 pl-6 mt-10 gap-8">
-                            {cartList.map((row,index)=>(
-                                <div className="col-span-5">
-                                    <CartProductCard product={row} quantity={row.quantity} removeCart={removeCart} addQuantity={addQuantity} removeQuantity={removeQuantity} index={index}/>
+                            {cartList.map((row)=>(
+                                <div className="col-span-5" key={row._id}>
+                                    <CartProductCard product={row} quantity={row.quantity} removeCart={removeCart} addQuantity={addQuantity} removeQuantity={removeQuantity}/>
                                 </div>
                             ))}
                     </div>
