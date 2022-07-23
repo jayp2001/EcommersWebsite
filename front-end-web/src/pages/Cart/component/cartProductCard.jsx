@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as constatnt from '../../../constatnt/auth';
 import { useState } from 'react';
 
-function CartProductCard({product,removeCart,quantity,addQuantity,removeQuantity,productId}){
+function CartProductCard({product,removeCart,quantity,addQuantity,removeQuantity,index,productId}){
     
     const [data,setData] = useState(product);
     
@@ -14,7 +14,7 @@ function CartProductCard({product,removeCart,quantity,addQuantity,removeQuantity
     console.log(">>>>",data)
 
     return(
-        <div className='ProductCard'>
+        <div className='ProductCard' key={index}>
             <div className='product-image'>
                 <img src={data.productImage.URL} />
             </div>

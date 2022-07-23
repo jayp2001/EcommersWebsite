@@ -18,6 +18,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import * as constatnt from '../../constatnt/auth';
+import { Pagination } from '@mui/material';
 // import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 
@@ -25,12 +26,28 @@ function ProductListElectric(){
 
     const [productList,setProductList] = useState();
     const [personName, setPersonName] = React.useState([]);
+    const [page, setPage] = useState(1)
+    const [totalPage,setTotalPage] = useState(1);
+    // const loadPosts = async () =>{
+    //     const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct`)
+    // }
+    
     const theme = useTheme();
     useEffect(()=>{
-        const res = axios.get(`${constatnt.DB_URL}product/getElectricProduct`)
-        .then(res=> setProductList(res.data))
+        const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${1}/${5}`)
+        .then(res=> setProductList(res.data.data))
         console.log(res);
+
+        const temp = axios.get(`${constatnt.DB_URL}product/getNumberofElectricProduct`)
+        .then(res=> setTotalPage((res.data % 5) == 0 ? res.data/5 : parseInt(res.data/5)+1))
     },[setProductList]);
+
+    const pagination = async(event, value) =>{
+        setPage(value)
+        const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${value}/${5}`)
+        .then(res=> setProductList(res.data.data))
+        console.log(res);
+    }
 
     if(!productList){
         return null;
@@ -68,9 +85,7 @@ function ProductListElectric(){
               : theme.typography.fontWeightMedium,
         };
       }
-      
-        
-      
+              
         const handleChange = (event) => {
           const {
             target: { value },
@@ -224,12 +239,17 @@ function ProductListElectric(){
                                 <ProductCard />
                                 <ProductCard />
                                 <ProductCard /> */}
-                                {productList.map((row,index) =>(
-                                    <ProductCard data={row} type={"electric"} index={index}/>
+                                {productList?.map((row,index) =>(
+                                    <ProductCard data={row} type={"electric"}/>
                                 ))}
                             </div>
                         </div>
                     </div>
+                        <div className='grid grid-cols-12'>
+                            <div className='col-span-12 col-start-3 m-6'>
+                                <Pagination count={totalPage} color="primary" size='large' defaultPage={1} onChange={pagination} />
+                            </div>
+                        </div>
                 </div>
             </div>
         </>

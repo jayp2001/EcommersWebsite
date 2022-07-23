@@ -18,6 +18,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import * as constatnt from '../../constatnt/auth';
+import { Pagination } from '@mui/material';
 // import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 
@@ -25,12 +26,24 @@ function ProductListFashion(){
 
     const [productList,setProductList] = useState();
     const [personName, setPersonName] = React.useState([]);
+    const [page, setPage] = useState(1)
+    const [totalPage,setTotalPage] = useState(1);
     const theme = useTheme();
     useEffect(()=>{
-        const res = axios.get(`${constatnt.DB_URL}product/getFashionProduct`)
-        .then(res=> setProductList(res.data))
+        const res = axios.get(`${constatnt.DB_URL}product/getAllFashionProduct/${1}/${1}`)
+        .then(res=> setProductList(res.data.data))
         console.log(res);
+
+        const temp = axios.get(`${constatnt.DB_URL}product/getNumberofFashionProduct`)
+        .then(res=> setTotalPage((res.data % 1) == 0 ? res.data/1 : parseInt(res.data/1)+1))
     },[setProductList]);
+
+    const pagination = async(event, value) =>{
+        setPage(value)
+        const res = axios.get(`${constatnt.DB_URL}product/getAllFashionProduct/${value}/${1}`)
+        .then(res=> setProductList(res.data.data))
+        console.log(res);
+    }
 
     if(!productList){
         return null;
@@ -230,6 +243,11 @@ function ProductListFashion(){
                             </div>
                         </div>
                     </div>
+                            <div className='grid grid-cols-12'>
+                                <div className='col-span-12 col-start-3 m-6'>
+                                    <Pagination count={totalPage} color="primary" size='large' defaultPage={page} onChange={pagination} />
+                                </div>
+                            </div>    
                 </div>
             </div>
         </>

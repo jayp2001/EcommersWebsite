@@ -13,7 +13,7 @@ function ProductCard({data,index,type}){
     }
     const productData = data;
     return(
-        <div className='product-card' onClick={()=>goToInfo(data._id)} key={index}>
+        <div className='product-card' onClick={()=>goToInfo(data._id)} key={data._id}>
             <div className='product-img grid grid-cols-1 content-center'>
                 <div className='flex justify-center' style={{width:"100%"}}>
                     <div>

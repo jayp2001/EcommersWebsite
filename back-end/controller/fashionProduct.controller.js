@@ -59,6 +59,11 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
     // .catch(err => res.status(400).json('Error: ' + err));
   })
 
+  const getNumberofFashionProduct = asyncHandler(async (req,res) =>{
+    const data =await FashionProduct.find()
+    res.status(200).json(data.length);
+  })
+
     //UPDATE Fashion Product
 
     const  updateFashionProduct = asyncHandler(async(req,res)=>{
@@ -79,7 +84,25 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
         })
         .catch(err => res.status(400).json('Error: '+err));
       })
+
+      //Pagination
+
+  const getAllFashionProduct = async(req,res,next) => {
+    try{
+    const { page , limit} = req.params; 
+    const data = await FashionProduct.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
+    res.status(200).json({total : data.length,data});
+    }
+    catch(error){
+      console.log(err);
+      res.status(500).json({
+        error: err
+      })
+    }
+  }
  
   module.exports = {
-    getFashionProduct,updateFashionProduct,getFashionProductById
+    getFashionProduct,updateFashionProduct,getFashionProductById,getAllFashionProduct,getNumberofFashionProduct
   }

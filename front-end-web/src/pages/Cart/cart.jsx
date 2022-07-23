@@ -32,15 +32,6 @@ function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }
 
-function priceRow(qty, price) {
-  return qty * price;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
-
 function subtotal() {
   var sum=0;
   cartList.forEach(element => {
@@ -48,12 +39,6 @@ function subtotal() {
   });
   return sum;
 }
-
-const rows = [
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-];
 
 // const invoiceSubtotal = subtotal(rows);
 const invoiceTaxes = TAX_RATE * subtotal();
@@ -103,9 +88,9 @@ const invoiceTotal = invoiceTaxes + subtotal();
         <div className="grid grid-cols-12">
                 <div className="col-start-1 col-span-7">
                     <div className="grid grid-cols-12 pl-6 mt-10 gap-8">
-                            {cartList.map((row)=>(
+                            {cartList.map((row,index)=>(
                                 <div className="col-span-5" key={row._id}>
-                                    <CartProductCard product={row} quantity={row.quantity} removeCart={removeCart} addQuantity={addQuantity} removeQuantity={removeQuantity}/>
+                                    <CartProductCard product={row} quantity={row.quantity} removeCart={removeCart} addQuantity={addQuantity} removeQuantity={removeQuantity} index={index}/>
                                 </div>
                             ))}
                     </div>

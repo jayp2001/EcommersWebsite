@@ -106,12 +106,12 @@ const addCartList = asyncHandler(async (req, res) => {
         // res.status(200).json(data);
 
         if(data[0]){
-          // console.log(!!data[0])
+           console.log(!!data[0])
           var productIdList = [];
 
           data.forEach(element => {
-            // const id =element.productId.toHexString()
-            // console.log(id)
+             const id =element.productId.toHexString()
+             console.log(id)
             productIdList.push(element.productId.toHexString());
           });
           console.log(productIdList)
@@ -144,6 +144,8 @@ const addCartList = asyncHandler(async (req, res) => {
           else
           res.status(200).json("no data found");
         }
+        else
+          res.status(200).send([]);
           
       }
       catch (error) {
@@ -171,8 +173,8 @@ const addCartList = asyncHandler(async (req, res) => {
         }
         await CartList.deleteOne({userId:userId,productId:productId})
             .then((res) => next())
-            .catch(err => res.status(400).json('Error: '+err));
-        
+            .catch(err => {res.status(400).json('Error: '+err),next()});
+            // next()
       }
       catch(error){
         throw new Error('Unsuccessfull')
@@ -196,13 +198,14 @@ const addCartList = asyncHandler(async (req, res) => {
           if(!productData[0]){
             productData = await FashionProduct.find({_id:productId});
           }
-          console.log(productId);
+          
           const exixstingData = await CartList.find({userId:userId , productId:productId}) 
             .then(data => {
               console.log(">>>>>",data);
               console.log(productData[0].quantity)
               if (productData[0].quantity <= data[0].quantity){
                 console.log("else")
+                next()
                 return null;
               }
               else if(productData[0].quantity > data[0].quantity){

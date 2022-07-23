@@ -77,6 +77,11 @@ const { json } = require('express');
     // .then(electricProduct => res.json(electricProduct))
     // .catch(err => res.status(400).json('Error: ' + err));
   })
+
+  const getNumberofElectricProduct = asyncHandler(async (req,res) =>{
+    const data =await ElectricProduct.find()
+    res.status(200).json(data.length);
+  })
  
   //UPDATE Electric Product
 
@@ -98,9 +103,25 @@ const { json } = require('express');
     })
     .catch(err => res.status(400).json('Error: '+err));
   })
+   
+  //Pagination
 
-  
-
+  const getAllElectricProduct = async(req,res,next) => {
+    try{
+      console.log(">>",req.params);
+    const { page ,limit } = req.params; 
+    const data = await ElectricProduct.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
+    res.status(200).json({total : data.length,data});
+    }
+    catch(error){
+      console.log(err);
+      res.status(500).json({
+        error: err
+      })
+    }
+  }
   module.exports = {
-    getElectricProduct,updateElectricProduct,getElectricProductById
+    getElectricProduct,updateElectricProduct,getElectricProductById,getAllElectricProduct,getNumberofElectricProduct
   }
