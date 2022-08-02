@@ -122,6 +122,26 @@ const { json } = require('express');
       })
     }
   }
+
+  //prise Filter
+
+  const getPriseSort = async(req,res) =>{
+    try{
+      const {minPrice,maxPrice} =req.body
+      const { page ,limit } = req.params;
+      const temp = await ElectricProduct.find({price:{$gte:minPrice, $lte:maxPrice}})
+      const data = await ElectricProduct.find({price:{$gte:minPrice, $lte:maxPrice}})
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+      res.status(200).json({total : temp.length,data});
+    }
+    catch(error){
+      res.status(500).json({
+        error: err
+      })
+    }
+  }
+
   module.exports = {
-    getElectricProduct,updateElectricProduct,getElectricProductById,getAllElectricProduct,getNumberofElectricProduct
+    getElectricProduct,updateElectricProduct,getElectricProductById,getAllElectricProduct,getNumberofElectricProduct,getPriseSort
   }

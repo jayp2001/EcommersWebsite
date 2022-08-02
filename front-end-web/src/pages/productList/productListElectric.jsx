@@ -26,11 +26,22 @@ function ProductListElectric(){
 
     const [productList,setProductList] = useState();
     const [personName, setPersonName] = React.useState([]);
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(1);
+    const [costFilter,setCostFilter] = useState({
+        minPrice:0,
+        maxPrice:0
+    });
     const [totalPage,setTotalPage] = useState(1);
     // const loadPosts = async () =>{
     //     const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct`)
     // }
+
+    const onchange = (e) => {
+        setCostFilter((prevState) => ({
+          ...prevState,
+          [e.target.name]: e.target.value,
+        }))
+      }
     
     const theme = useTheme();
     useEffect(()=>{
@@ -46,6 +57,15 @@ function ProductListElectric(){
         setPage(value)
         const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${value}/${5}`)
         .then(res=> setProductList(res.data.data))
+
+        // const costFilteredData = axios.get(`${constatnt.DB_URL}product/getPriseSort/${value}/${5}`)
+        // .then(res => setProductList(res.data.data))
+        console.log(res);
+    }
+
+    const ApplayFilter = async(e) =>{
+        const res = axios.get(`${constatnt.DB_URL}product/getPriseSort/${1}/${5}`)
+        .then(res => setProductList(res.data.data))
         console.log(res);
     }
 
@@ -113,7 +133,7 @@ function ProductListElectric(){
                                 <div className='flex justify-center flex-col px-6'>
                                     <div className='flex justify-between mb-10'>
                                         <div className='apply'>
-                                            <button>Apply Filter</button>
+                                            <button onClick={ApplayFilter}>Apply Filter</button>
                                         </div>
                                         <div className='reset'>
                                             <button>
@@ -139,7 +159,9 @@ function ProductListElectric(){
                                                     <TextField 
                                                         label="Min Cost"
                                                         type="number"
-                                                        defaultValue={0}
+                                                        name="minPrice"
+                                                        value={costFilter.minPrice}
+                                                        onChange={onchange}
                                                     />
                                                 </div>
                                                 <div className='my-4 text-xl'>
@@ -149,7 +171,9 @@ function ProductListElectric(){
                                                 <TextField 
                                                         label="Max Cost"
                                                         type="number"
-                                                        defaultValue={1000000}
+                                                        name="maxPrice"
+                                                        Value={costFilter.maxPrice}
+                                                        onChange={onchange}
                                                     />
                                                 </div>
                                             </AccordionDetails>

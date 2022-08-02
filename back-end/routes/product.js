@@ -8,7 +8,7 @@ let FashionProduct = require('../model/fashionProduct.model');
 const asyncHandler = require('express-async-handler');
 const fs = require('fs')
 
-const { getElectricProduct, updateElectricProduct,getElectricProductById, getAllElectricProduct ,getNumberofElectricProduct} = require('../controller/electricProduct.controller');
+const { getElectricProduct, updateElectricProduct,getElectricProductById, getAllElectricProduct ,getNumberofElectricProduct, getPriseSort} = require('../controller/electricProduct.controller');
 const  {getFashionProduct, updateFashionProduct ,getFashionProductById, getAllFashionProduct, getNumberofFashionProduct} = require('../controller/fashionProduct.controller');
 
 //Electric Product
@@ -18,6 +18,7 @@ router.get('/getElectricProduct/:id',getElectricProductById);
 router.post('/updateElectricProduct/:id',updateElectricProduct);
 router.get('/getAllElectricProduct/:page/:limit',getAllElectricProduct);
 router.get('/getNumberofElectricProduct',getNumberofElectricProduct);
+router.get('/getPriseSort/:page/:limit',getPriseSort);
 
 
 

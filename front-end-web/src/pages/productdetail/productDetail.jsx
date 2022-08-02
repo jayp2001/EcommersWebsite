@@ -76,7 +76,6 @@ function ProductDetail(){
                                         id="outlined-number"
                                         defaultValue={1}
                                         label="quantity"
-                                        type="number"
                                         value={quantity}
                                         InputLabelProps={{
                                             shrink: true,
