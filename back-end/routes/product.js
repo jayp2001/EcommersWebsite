@@ -8,8 +8,8 @@ let FashionProduct = require('../model/fashionProduct.model');
 const asyncHandler = require('express-async-handler');
 const fs = require('fs')
 
-const { getElectricProduct, updateElectricProduct,getElectricProductById, getAllElectricProduct ,getNumberofElectricProduct, getPriseSort} = require('../controller/electricProduct.controller');
-const  {getFashionProduct, updateFashionProduct ,getFashionProductById, getAllFashionProduct, getNumberofFashionProduct} = require('../controller/fashionProduct.controller');
+const {getMaxthreeElectricProductValue, getElectricProduct, updateElectricProduct,getElectricProductById, getAllElectricProduct ,getNumberofElectricProduct, getPriseSort} = require('../controller/electricProduct.controller');
+const  {getMaxthreeFashionProductValue ,getFashionProduct, updateFashionProduct ,getFashionProductById, getAllFashionProduct, getNumberofFashionProduct} = require('../controller/fashionProduct.controller');
 
 //Electric Product
 
@@ -18,7 +18,8 @@ router.get('/getElectricProduct/:id',getElectricProductById);
 router.post('/updateElectricProduct/:id',updateElectricProduct);
 router.get('/getAllElectricProduct/:page/:limit',getAllElectricProduct);
 router.get('/getNumberofElectricProduct',getNumberofElectricProduct);
-router.get('/getPriseSort/:page/:limit',getPriseSort);
+router.post('/getPriseSort/:page/:limit',getPriseSort);
+router.get('/getMaxthreeElectricProductValue',getMaxthreeElectricProductValue);
 
 
 
@@ -29,6 +30,7 @@ router.get('/getFashionProduct/:id',getFashionProductById);
 router.post('/updateFashionProduct/:id',updateFashionProduct);
 router.get('/getAllFashionProduct/:page/:limit',getAllFashionProduct);
 router.get('/getNumberofFashionProduct',getNumberofFashionProduct)
+router.get('/getMaxthreeFashionProductValue',getMaxthreeFashionProductValue);
 
 
 //Electric Product Add With Image in Google Drive

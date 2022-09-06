@@ -102,7 +102,20 @@ const getFashionProduct = asyncHandler(async (req,res) =>{
       })
     }
   }
+
+  // Max 3 Value find 
+
+  const getMaxthreeFashionProductValue = async(req,res) =>{
+    try{
+      const data = await FashionProduct.find().sort("-price").limit(3);
+      res.status(200).json({data});
+    }catch(error){
+      res.status(500).json({
+        error: err
+      })
+    }
+  }
  
   module.exports = {
-    getFashionProduct,updateFashionProduct,getFashionProductById,getAllFashionProduct,getNumberofFashionProduct
+    getFashionProduct,updateFashionProduct,getFashionProductById,getAllFashionProduct,getNumberofFashionProduct,getMaxthreeFashionProductValue
   }

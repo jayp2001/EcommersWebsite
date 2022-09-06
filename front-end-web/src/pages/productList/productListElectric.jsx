@@ -45,17 +45,17 @@ function ProductListElectric(){
     
     const theme = useTheme();
     useEffect(()=>{
-        const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${1}/${5}`)
+        const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${1}/${9}`)
         .then(res=> setProductList(res.data.data))
         console.log(res);
 
         const temp = axios.get(`${constatnt.DB_URL}product/getNumberofElectricProduct`)
-        .then(res=> setTotalPage((res.data % 5) == 0 ? res.data/5 : parseInt(res.data/5)+1))
+        .then(res=> setTotalPage((res.data % 9) == 0 ? res.data/9 : parseInt(res.data/9)+1))
     },[setProductList]);
 
     const pagination = async(event, value) =>{
         setPage(value)
-        const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${value}/${5}`)
+        const res = axios.get(`${constatnt.DB_URL}product/getAllElectricProduct/${value}/${9}`)
         .then(res=> setProductList(res.data.data))
 
         // const costFilteredData = axios.get(`${constatnt.DB_URL}product/getPriseSort/${value}/${5}`)
@@ -64,7 +64,12 @@ function ProductListElectric(){
     }
 
     const ApplayFilter = async(e) =>{
-        const res = axios.get(`${constatnt.DB_URL}product/getPriseSort/${1}/${5}`)
+        console.log(">>>>>>>>>>>>>>",costFilter)
+        const data = {
+            minPrice: costFilter.minPrice,
+            maxPrice: costFilter.maxPrice
+        }
+        const res = axios.post(`${constatnt.DB_URL}product/getPriseSort/1/5`,data)
         .then(res => setProductList(res.data.data))
         console.log(res);
     }

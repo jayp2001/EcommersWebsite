@@ -17,7 +17,7 @@ function ProductCard({data,index,type}){
             <div className='product-img grid grid-cols-1 content-center'>
                 <div className='flex justify-center' style={{width:"100%"}}>
                     <div>
-                        <img src={productData.productImage.URL} />
+                        <img style={{maxHeight:"300px"}} src={productData.productImage.URL} />
                     </div>
                 </div>
             </div>

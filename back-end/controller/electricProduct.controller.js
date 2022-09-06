@@ -129,6 +129,7 @@ const { json } = require('express');
     try{
       const {minPrice,maxPrice} =req.body
       const { page ,limit } = req.params;
+      console.log(">>>>>>>>>><<<<<<<<<<<<<<<<",req.body);
       const temp = await ElectricProduct.find({price:{$gte:minPrice, $lte:maxPrice}})
       const data = await ElectricProduct.find({price:{$gte:minPrice, $lte:maxPrice}})
       .limit(limit * 1)
@@ -142,6 +143,19 @@ const { json } = require('express');
     }
   }
 
+  // Max 3 Value find 
+
+  const getMaxthreeElectricProductValue = async(req,res) =>{
+    try{
+      const data = await ElectricProduct.find().sort("-price").limit(3);
+      res.status(200).json({data});
+    }catch(error){
+      res.status(500).json({
+        error: err
+      })
+    }
+  }
+
   module.exports = {
-    getElectricProduct,updateElectricProduct,getElectricProductById,getAllElectricProduct,getNumberofElectricProduct,getPriseSort
+    getElectricProduct,updateElectricProduct,getElectricProductById,getAllElectricProduct,getNumberofElectricProduct,getPriseSort,getMaxthreeElectricProductValue
   }

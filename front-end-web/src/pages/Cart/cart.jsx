@@ -82,8 +82,6 @@ const invoiceTotal = invoiceTaxes + subtotal();
         }
        
     }
-   
-
     return(
         <div className="grid grid-cols-12">
                 <div className="col-start-1 col-span-7">
@@ -107,7 +105,7 @@ const invoiceTotal = invoiceTaxes + subtotal();
                                             <TableCell align="center" colSpan={2}>
                                             Details
                                             </TableCell>
-                                            <TableCell align="center">Price</TableCell>
+                                            <TableCell align="center">Price(₹)</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell sx={{ minWidth: 100}}>Product Name</TableCell>
@@ -137,7 +135,7 @@ const invoiceTotal = invoiceTaxes + subtotal();
                                             <TableCell align="center">{ccyFormat(invoiceTaxes)}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell align="right" colSpan={1}>Total</TableCell>
+                                            <TableCell align="right" colSpan={1}>Total(₹)</TableCell>
                                             <TableCell />
                                             <TableCell align="center">{ccyFormat(invoiceTotal)}</TableCell>
                                         </TableRow>
