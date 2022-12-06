@@ -84,5 +84,6 @@
     transition: .5s ease-in-out;
 }
 .active{
-    color: skyblue;
+
+    color: skyblue !important;
 }

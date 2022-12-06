@@ -22,6 +22,10 @@
 
 }
 
+.img1{
+    height: 300px;
+}
+
 .view-more{
     cursor: pointer;
     color: #007aff;

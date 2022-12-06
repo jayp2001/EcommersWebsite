@@ -10,20 +10,20 @@ function Nevbar() {
                 <div className="grid grid-cols-12">
                 <div className="col-span-8 col-start-2 flex justify-between">
                     <div>
-                        <NavLink to="/deskBoard" activeClassName="active" className="Home">Home</NavLink>
+                        <NavLink style={{textDecoration: 'none', color:'black'}} to="/deskBoard" activeClassName="active" className="Home">Home</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/electric" activeClassName="active" className="Electronic">Electronic</NavLink>
+                        <NavLink style={{textDecoration: 'none', color:'black'}} to="/electric" activeClassName="active" className="Electronic">Electronic</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/fashion" activeClassName="active" className="Fashion">Fashion</NavLink>
+                        <NavLink style={{textDecoration: 'none', color:'black'}} to="/fashion" activeClassName="active" className="Fashion">Fashion</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/cart" activeClassName="active" className="Cart">Cart</NavLink>
+                        <NavLink style={{textDecoration: 'none', color:'black'}} to="/cart" activeClassName="active" className="Cart">Cart</NavLink>
                     </div>
-                    <div>
-                        <NavLink to="/" activeClassName="active" className="Support">Support</NavLink> 
-                    </div>
+                    {/* <div>
+                        <NavLink style={{textDecoration: 'none', color:'black'}} to="/" activeClassName="active" className="Support">Support</NavLink> 
+                    </div> */}
                 </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@ function Nevbar() {
                 <div className="grid grid-cols-12">
                     <div className="col-span-8 col-start-2 flex justify-between">
                         <div>
-                        <TextField
+                        {/* <TextField
                             hiddenLabel
                             id="filled-hidden-label-small"
                             placeholder="Search"
@@ -39,10 +39,10 @@ function Nevbar() {
                             variant="standard"
                             size="small"
                         />
-                            <button className="Button ml-6">Search</button>
+                            <button className="Button ml-6">Search</button> */}
                         </div>
                         <div>
-                            <Link to="/" className="ml-6 Login">Log In</Link>
+                            <Link style={{textDecoration: 'none', color:'black'}} to="/" className="ml-6 Login">Log In</Link>
                         </div>
                 </div>
             </div>
